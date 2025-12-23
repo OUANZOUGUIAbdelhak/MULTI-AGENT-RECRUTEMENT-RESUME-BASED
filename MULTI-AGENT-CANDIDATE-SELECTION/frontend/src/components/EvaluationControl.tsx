@@ -5,6 +5,7 @@ import { JobOffer } from '../types';
 interface EvaluationControlProps {
   jobOffer: JobOffer | null;
   cvCount: number;
+  selectedResumeCount?: number;
   isEvaluating: boolean;
   onStartEvaluation: () => void;
 }
@@ -12,10 +13,12 @@ interface EvaluationControlProps {
 export default function EvaluationControl({
   jobOffer,
   cvCount,
+  selectedResumeCount = 0,
   isEvaluating,
   onStartEvaluation,
 }: EvaluationControlProps) {
-  const canStart = jobOffer !== null && cvCount > 0 && !isEvaluating;
+  const totalCVs = cvCount + selectedResumeCount;
+  const canStart = jobOffer !== null && totalCVs > 0 && !isEvaluating;
 
   return (
     <motion.div
@@ -40,11 +43,16 @@ export default function EvaluationControl({
             <div className="flex items-center gap-2">
               <div
                 className={`w-2 h-2 rounded-full ${
-                  cvCount > 0 ? 'bg-green-400' : 'bg-gray-500'
+                  totalCVs > 0 ? 'bg-green-400' : 'bg-gray-500'
                 }`}
               />
               <span>
-                CVs: {cvCount} {cvCount === 1 ? 'file' : 'files'}
+                CVs: {totalCVs} {totalCVs === 1 ? 'file' : 'files'}
+                {selectedResumeCount > 0 && cvCount > 0 && (
+                  <span className="text-gray-500 ml-1">
+                    ({cvCount} uploaded, {selectedResumeCount} selected)
+                  </span>
+                )}
               </span>
             </div>
           </div>
@@ -79,17 +87,17 @@ export default function EvaluationControl({
         </motion.button>
       </div>
 
-      {!canStart && !isEvaluating && (
+          {!canStart && !isEvaluating && (
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="mt-4 text-sm text-yellow-400"
         >
-          {!jobOffer && cvCount === 0
-            ? 'Please add a job offer and upload at least one CV to start evaluation.'
+          {!jobOffer && totalCVs === 0
+            ? 'Please add a job offer and select/upload at least one CV to start evaluation.'
             : !jobOffer
             ? 'Please complete the job offer details to start evaluation.'
-            : 'Please upload at least one CV to start evaluation.'}
+            : 'Please select or upload at least one CV to start evaluation.'}
         </motion.p>
       )}
     </motion.div>

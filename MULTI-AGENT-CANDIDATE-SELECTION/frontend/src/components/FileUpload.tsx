@@ -1,16 +1,26 @@
 import { motion } from 'framer-motion';
-import { Upload, FileText, X } from 'lucide-react';
+import { Upload, FileText, X, Play } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { UploadedCV } from '../types';
 import { cn } from '../utils/cn';
+import FileSelector from './FileSelector';
 
 interface FileUploadProps {
   onFilesUploaded: (files: File[]) => void;
   uploadedCVs: UploadedCV[];
   onRemoveCV: (id: string) => void;
+  onProcessResumes?: (fileIds: string[]) => void;
+  selectedResumeIds?: string[];
 }
 
-export default function FileUpload({ onFilesUploaded, uploadedCVs, onRemoveCV }: FileUploadProps) {
+export default function FileUpload({ 
+  onFilesUploaded, 
+  uploadedCVs, 
+  onRemoveCV,
+  onProcessResumes,
+  selectedResumeIds = [],
+  onResumeSelectionChange
+}: FileUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -52,6 +62,41 @@ export default function FileUpload({ onFilesUploaded, uploadedCVs, onRemoveCV }:
 
   return (
     <div className="space-y-4">
+      {/* File Selector from DATA/raw */}
+      <FileSelector
+        title="Select Resumes from DATA/raw"
+        endpoint="/api/files/resumes"
+        selectedFiles={selectedResumeIds}
+        onSelectionChange={(fileIds) => {
+          if (onResumeSelectionChange) {
+            onResumeSelectionChange(fileIds);
+          }
+        }}
+        multiple={true}
+      />
+      
+      {selectedResumeIds.length > 0 && onProcessResumes && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass rounded-2xl p-4"
+        >
+          <button
+            onClick={() => onProcessResumes(selectedResumeIds)}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+          >
+            <Play className="w-5 h-5" />
+            <span>Process {selectedResumeIds.length} Selected Resume{selectedResumeIds.length !== 1 ? 's' : ''}</span>
+          </button>
+        </motion.div>
+      )}
+      
+      <div className="flex items-center gap-4">
+        <div className="flex-1 h-px bg-white/10"></div>
+        <span className="text-xs text-gray-500">OR</span>
+        <div className="flex-1 h-px bg-white/10"></div>
+      </div>
+      
       {/* Upload Area */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

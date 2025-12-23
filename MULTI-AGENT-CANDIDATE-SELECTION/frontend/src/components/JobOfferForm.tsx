@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { JobOffer } from '../types';
 import { parseJobOfferFile } from '../utils/jobOfferParser';
 import { cn } from '../utils/cn';
+import FileSelector from './FileSelector';
 
 interface JobOfferFormProps {
   onJobOfferChange: (offer: JobOffer | null) => void;
@@ -91,48 +92,78 @@ export default function JobOfferForm({ onJobOfferChange, initialOffer }: JobOffe
         </div>
       </div>
 
-      {/* File Upload Section */}
+      {/* File Selection Section */}
       <div className="mb-6">
-        <div className="flex items-center gap-4">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".txt"
-            onChange={handleFileSelect}
-            className="hidden"
-          />
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isUploading}
-            className={cn(
-              'flex items-center gap-2 px-4 py-2 rounded-xl border transition-all',
-              'bg-white/5 border-white/20 hover:border-blue-400/50 hover:bg-blue-500/10',
-              'text-white disabled:opacity-50 disabled:cursor-not-allowed'
-            )}
-          >
-            <Upload className="w-4 h-4" />
-            <span className="text-sm font-medium">
-              {isUploading ? 'Uploading...' : 'Upload Job Offer File'}
-            </span>
-          </button>
-          {uploadedFileName && (
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-500/10 border border-green-400/20">
-              <FileText className="w-4 h-4 text-green-400" />
-              <span className="text-sm text-green-400 font-medium truncate max-w-[200px]">
-                {uploadedFileName}
-              </span>
-              <button
-                onClick={handleRemoveFile}
-                className="p-1 rounded hover:bg-red-500/20 text-red-400 transition-colors"
-              >
-                <X className="w-3 h-3" />
-              </button>
-            </div>
-          )}
+        <FileSelector
+          title="Select Job Offer from DATA/jobs"
+          endpoint="/api/files/job-offers"
+          selectedFiles={uploadedFileName ? [uploadedFileName] : []}
+          onSelectionChange={(fileIds) => {
+            if (fileIds.length > 0) {
+              // File will be loaded via onFileContentLoad
+            } else {
+              handleRemoveFile();
+            }
+          }}
+          onFileContentLoad={(fileId, content) => {
+            const parsed = parseJobOfferFile(content, fileId);
+            setJobOffer(parsed);
+            setUploadedFileName(fileId);
+            onJobOfferChange(
+              parsed.title && parsed.description && parsed.requirements ? parsed : null
+            );
+          }}
+          multiple={false}
+        />
+        
+        <div className="mt-4 flex items-center gap-4">
+          <div className="flex-1 h-px bg-white/10"></div>
+          <span className="text-xs text-gray-500">OR</span>
+          <div className="flex-1 h-px bg-white/10"></div>
         </div>
-        <p className="text-xs text-gray-500 mt-2">
-          Upload a .txt file containing the job offer description. The form will be auto-filled with extracted information.
-        </p>
+        
+        <div className="mt-4">
+          <div className="flex items-center gap-4">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              className={cn(
+                'flex items-center gap-2 px-4 py-2 rounded-xl border transition-all',
+                'bg-white/5 border-white/20 hover:border-blue-400/50 hover:bg-blue-500/10',
+                'text-white disabled:opacity-50 disabled:cursor-not-allowed'
+              )}
+            >
+              <Upload className="w-4 h-4" />
+              <span className="text-sm font-medium">
+                {isUploading ? 'Uploading...' : 'Upload New Job Offer File'}
+              </span>
+            </button>
+            {uploadedFileName && !uploadedFileName.includes('/') && (
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-green-500/10 border border-green-400/20">
+                <FileText className="w-4 h-4 text-green-400" />
+                <span className="text-sm text-green-400 font-medium truncate max-w-[200px]">
+                  {uploadedFileName}
+                </span>
+                <button
+                  onClick={handleRemoveFile}
+                  className="p-1 rounded hover:bg-red-500/20 text-red-400 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+          </div>
+          <p className="text-xs text-gray-500 mt-2">
+            Upload a .txt file containing the job offer description. The form will be auto-filled with extracted information.
+          </p>
+        </div>
       </div>
 
       <div className="space-y-4">

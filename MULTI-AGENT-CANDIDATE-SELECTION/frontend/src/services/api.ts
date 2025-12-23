@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000
 /**
  * Upload CV files to the backend
  */
-export async function uploadCVs(files: File[]): Promise<{ success: boolean; message: string }> {
+export async function uploadCVs(files: File[]): Promise<{ success: boolean; message: string; files?: any[]; build_id?: string }> {
   const formData = new FormData();
   files.forEach((file) => {
     formData.append('files', file);
@@ -19,14 +19,19 @@ export async function uploadCVs(files: File[]): Promise<{ success: boolean; mess
     });
 
     if (!response.ok) {
-      throw new Error('Failed to upload CVs');
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to upload CVs');
     }
 
-    return await response.json();
+    const data = await response.json();
+    return {
+      success: data.success,
+      message: data.message,
+      files: data.files
+    };
   } catch (error) {
     console.error('Error uploading CVs:', error);
-    // For now, return success for mock purposes
-    return { success: true, message: 'CVs uploaded successfully (mock)' };
+    throw error; // Re-throw to handle in component
   }
 }
 
@@ -35,8 +40,10 @@ export async function uploadCVs(files: File[]): Promise<{ success: boolean; mess
  */
 export async function startEvaluation(
   jobOffer: JobOffer,
-  cvIds: string[]
-): Promise<{ evaluationId: string }> {
+  cvIds: string[],
+  useRag: boolean = true,
+  maxCandidates: number = 10
+): Promise<{ evaluationId: string; status: string }> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/start-evaluation`, {
       method: 'POST',
@@ -44,20 +51,27 @@ export async function startEvaluation(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        jobOffer,
-        cvIds,
+        job_offer: jobOffer,
+        cv_ids: cvIds,
+        use_rag: useRag,
+        max_candidates: maxCandidates,
       }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to start evaluation');
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to start evaluation');
     }
 
-    return await response.json();
+    const data = await response.json();
+    // Map backend response (snake_case) to frontend format (camelCase)
+    return {
+      evaluationId: data.evaluation_id,
+      status: data.status,
+    };
   } catch (error) {
     console.error('Error starting evaluation:', error);
-    // For mock purposes, return a fake evaluation ID
-    return { evaluationId: `eval-${Date.now()}` };
+    throw error; // Re-throw to handle in component
   }
 }
 
@@ -67,27 +81,76 @@ export async function startEvaluation(
 export async function getEvaluationStatus(
   evaluationId: string
 ): Promise<{
-  status: 'running' | 'completed';
-  agents: any[];
+  status: 'running' | 'completed' | 'error';
+  agents: Array<{
+    id: string;
+    name: string;
+    status: 'waiting' | 'processing' | 'completed';
+    progress: number;
+  }>;
   candidates: CandidateDetails[];
   decision?: DecisionOutput;
+  error?: string;
 }> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/evaluation/${evaluationId}`);
 
     if (!response.ok) {
-      throw new Error('Failed to get evaluation status');
+      if (response.status === 404) {
+        throw new Error('Evaluation not found');
+      }
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to get evaluation status');
     }
 
-    return await response.json();
+    const data = await response.json();
+    
+    // Map backend agent format to frontend format
+    const agents = data.agents.map((agent: any) => ({
+      id: agent.id,
+      name: agent.name,
+      status: agent.status,
+      progress: agent.progress,
+    }));
+
+    return {
+      status: data.status,
+      agents,
+      candidates: data.candidates || [],
+      decision: data.decision,
+      error: data.error,
+    };
   } catch (error) {
     console.error('Error getting evaluation status:', error);
-    // Return mock data structure
-    return {
-      status: 'running',
-      agents: [],
-      candidates: [],
-    };
+    throw error; // Re-throw to handle in component
+  }
+}
+
+/**
+ * Process selected resume files
+ */
+export async function processResumes(fileIds: string[]): Promise<{ build_id: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/process-resumes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        file_ids: fileIds,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.detail || 'Failed to process resumes');
+    }
+
+    const data = await response.json();
+    return { build_id: data.build_id };
+  } catch (error) {
+    console.error('Error processing resumes:', error);
+    throw error;
   }
 }
 

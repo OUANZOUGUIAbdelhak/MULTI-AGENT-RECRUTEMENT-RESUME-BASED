@@ -8,9 +8,10 @@ import DecisionOutput from './components/DecisionOutput';
 import FileUpload from './components/FileUpload';
 import JobOfferForm from './components/JobOfferForm';
 import EvaluationControl from './components/EvaluationControl';
+import IndexBuildProgress from './components/IndexBuildProgress';
 import { Agent, CandidateDetails as CandidateDetailsType, UploadedCV, JobOffer, DecisionOutput as DecisionOutputType } from './types';
 import { mockAgents, mockCandidates, mockDecisionOutput } from './data/mockData';
-import { uploadCVs, startEvaluation } from './services/api';
+import { uploadCVs, startEvaluation, getEvaluationStatus, pollEvaluationStatus, processResumes } from './services/api';
 
 type AppView = 'setup' | 'evaluating' | 'results';
 
@@ -24,40 +25,98 @@ function App() {
   const [selectedCandidate, setSelectedCandidate] = useState<CandidateDetailsType | null>(null);
   const [candidates, setCandidates] = useState<CandidateDetailsType[]>([]);
   const [decisionOutput, setDecisionOutput] = useState<DecisionOutputType | null>(null);
+  const [indexBuildId, setIndexBuildId] = useState<string | null>(null);
+  const [selectedResumeIds, setSelectedResumeIds] = useState<string[]>([]);
   const evaluationIntervalRef = useRef<number | null>(null);
 
   // Handle file uploads
   const handleFilesUploaded = async (files: File[]) => {
-    const newCVs: UploadedCV[] = files.map((file) => ({
-      id: `cv-${Date.now()}-${Math.random()}`,
-      file,
-      name: file.name,
-      size: file.size,
-      uploadDate: new Date(),
-      status: 'uploaded',
-    }));
-
-    setUploadedCVs((prev) => [...prev, ...newCVs]);
-
-    // Upload to backend (mock for now)
     try {
-      await uploadCVs(files);
-      // Update status to processed after upload
-      setTimeout(() => {
-        setUploadedCVs((prev) =>
-          prev.map((cv) =>
-            newCVs.some((ncv) => ncv.id === cv.id) ? { ...cv, status: 'processed' } : cv
-          )
-        );
-      }, 1000);
+      // Upload to backend
+      const result = await uploadCVs(files);
+      
+      // Map backend file IDs to our CV structure
+      const newCVs: UploadedCV[] = (result.files || []).map((file: any) => ({
+        id: file.id,
+        file: files.find(f => f.name === file.filename) || files[0],
+        name: file.filename,
+        size: file.size,
+        uploadDate: new Date(file.upload_date),
+        status: 'processed' as const,
+      }));
+
+      setUploadedCVs((prev) => [...prev, ...newCVs]);
+      
+      // If backend is rebuilding index, track progress
+      if (result.build_id) {
+        setIndexBuildId(result.build_id);
+      }
     } catch (error) {
       console.error('Error uploading CVs:', error);
+      alert('Failed to upload CVs. Please try again.');
     }
   };
 
   // Remove CV
   const handleRemoveCV = (id: string) => {
     setUploadedCVs((prev) => prev.filter((cv) => cv.id !== id));
+    // Also remove from selected resumes if it was selected from DATA/raw
+    setSelectedResumeIds((prev) => prev.filter((resumeId) => resumeId !== id));
+  };
+
+  // Handle resume selection change from DATA/raw
+  const handleResumeSelectionChange = async (fileIds: string[]) => {
+    setSelectedResumeIds(fileIds);
+    
+    // Fetch file details and add to uploadedCVs if not already present
+    try {
+      const resumeFiles = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/files/resumes`).then(r => r.json());
+      const selectedFiles = resumeFiles.files.filter((f: any) => fileIds.includes(f.id));
+      
+      // Add to uploadedCVs if not already present
+      const newCVs: UploadedCV[] = selectedFiles
+        .filter((file: any) => !uploadedCVs.some(cv => cv.id === file.id))
+        .map((file: any) => ({
+          id: file.id,
+          file: new File([], file.filename), // Dummy file object since it's from server
+          name: file.filename,
+          size: file.size,
+          uploadDate: new Date(),
+          status: 'processed' as const,
+        }));
+      
+      if (newCVs.length > 0) {
+        setUploadedCVs((prev) => [...prev, ...newCVs]);
+      }
+      
+      // Remove CVs that are no longer selected
+      setUploadedCVs((prev) => 
+        prev.filter((cv) => {
+          // Keep if it's an uploaded file (has a real File object) or if it's still selected
+          if (cv.file.size > 0 || fileIds.includes(cv.id)) {
+            return true;
+          }
+          // Remove if it was from DATA/raw and is no longer selected
+          return false;
+        })
+      );
+    } catch (error) {
+      console.error('Error fetching resume files:', error);
+    }
+  };
+
+  // Process selected resumes from DATA/raw (rebuild index)
+  const handleProcessResumes = async (fileIds: string[]) => {
+    try {
+      // Process resumes (rebuild index) - resumes are already in uploadedCVs from selection
+      const result = await processResumes(fileIds);
+      if (result.build_id) {
+        setIndexBuildId(result.build_id);
+      }
+    } catch (error) {
+      console.error('Error processing resumes:', error);
+      alert('Failed to process resumes. Please try again.');
+    }
   };
 
   // Generate mock candidates from uploaded CVs
@@ -83,7 +142,14 @@ function App() {
 
   // Start evaluation
   const handleStartEvaluation = async () => {
-    if (!jobOffer || uploadedCVs.length === 0) return;
+    // Combine uploaded CVs and selected resumes from DATA/raw
+    const allCVIds = uploadedCVs.length > 0 
+      ? uploadedCVs.map((cv) => cv.id)
+      : selectedResumeIds.length > 0
+      ? selectedResumeIds
+      : [];
+    
+    if (!jobOffer || allCVIds.length === 0) return;
 
     setView('evaluating');
     setSystemStatus('running');
@@ -93,80 +159,81 @@ function App() {
     // Reset agents
     setAgents(mockAgents.map((agent) => ({ ...agent, status: 'waiting', progress: 0 })));
 
-    // Start backend evaluation (mock for now)
     try {
-      const cvIds = uploadedCVs.map((cv) => cv.id);
-      await startEvaluation(jobOffer, cvIds);
-    } catch (error) {
-      console.error('Error starting evaluation:', error);
-    }
+      // Start backend evaluation - use allCVIds (uploaded + selected from DATA/raw)
+      const result = await startEvaluation(jobOffer, allCVIds, true, 10);
+      const evaluationId = result.evaluationId;
 
-    // Simulate agent progression
-    simulateAgentProgression();
-  };
-
-  // Simulate agent progression
-  const simulateAgentProgression = () => {
-    let currentAgentIndex = 0;
-
-    const processAgent = (index: number) => {
-      if (index >= agents.length) {
-        setSystemStatus('completed');
-        setView('results');
-        
-        // Generate candidates from uploaded CVs
-        const generatedCandidates = generateCandidatesFromCVs(uploadedCVs);
-        setCandidates(generatedCandidates);
-
-        // Generate decision output
-        if (generatedCandidates.length > 0) {
-          const topCandidate = generatedCandidates[0];
-          setDecisionOutput({
-            topCandidate,
-            confidence: 94,
-            finalJustification: `After comprehensive evaluation by all agents, ${topCandidate.name} emerges as the top candidate with a global score of ${topCandidate.scores.global.toFixed(1)}/100. ${topCandidate.aiJustification} The multi-agent system recommends proceeding with this candidacy with high confidence.`,
-            totalCandidates: generatedCandidates.length,
-          });
-        }
+      if (!evaluationId) {
+        console.error('No evaluation ID returned from backend:', result);
+        alert('Failed to start evaluation: No evaluation ID received');
+        setSystemStatus('idle');
+        setView('setup');
         return;
       }
 
-      // Set current agent to processing
-      setAgents((prev) =>
-        prev.map((agent, i) =>
-          i === index ? { ...agent, status: 'processing', progress: 0 } : agent
-        )
+      console.log('Evaluation started with ID:', evaluationId);
+
+      // Start polling for updates
+      const stopPolling = pollEvaluationStatus(
+        evaluationId,
+        (data) => {
+          // Update agents
+          const updatedAgents = mockAgents.map((agent) => {
+            const backendAgent = data.agents.find((a: any) => a.id === agent.id);
+            if (backendAgent) {
+              return {
+                ...agent,
+                status: backendAgent.status as 'waiting' | 'processing' | 'completed',
+                progress: backendAgent.progress,
+              };
+            }
+            return agent;
+          });
+          setAgents(updatedAgents);
+
+          // Update candidates if available
+          if (data.candidates && data.candidates.length > 0) {
+            setCandidates(data.candidates);
+          }
+
+          // Update decision output
+          if (data.decision) {
+            setDecisionOutput(data.decision);
+          }
+
+          // Update system status
+          if (data.status === 'completed') {
+            setSystemStatus('completed');
+            setView('results');
+            if (stopPolling) stopPolling();
+          } else if (data.status === 'error') {
+            setSystemStatus('idle');
+            alert(`Evaluation error: ${data.error || 'Unknown error'}`);
+            if (stopPolling) stopPolling();
+          }
+        },
+        2000 // Poll every 2 seconds
       );
 
-      // Simulate progress
-      let progress = 0;
-      const progressInterval = setInterval(() => {
-        progress += 10;
-        if (progress <= 100) {
-          setAgents((prev) =>
-            prev.map((agent, i) =>
-              i === index ? { ...agent, progress } : agent
-            )
-          );
-        } else {
-          clearInterval(progressInterval);
-          // Mark as completed
-          setAgents((prev) =>
-            prev.map((agent, i) =>
-              i === index
-                ? { ...agent, status: 'completed', progress: 100 }
-                : agent
-            )
-          );
-          // Move to next agent
-          setTimeout(() => processAgent(index + 1), 500);
-        }
-      }, 200);
-    };
-
-    // Start processing
-    setTimeout(() => processAgent(0), 1000);
+      // Store stop function for cleanup
+      evaluationIntervalRef.current = stopPolling as any;
+    } catch (error) {
+      console.error('Error starting evaluation:', error);
+      alert('Failed to start evaluation. Please check if the backend is running.');
+      setSystemStatus('idle');
+      setView('setup');
+    }
   };
+
+  // Cleanup polling on unmount
+  useEffect(() => {
+    return () => {
+      if (evaluationIntervalRef.current) {
+        evaluationIntervalRef.current();
+      }
+    };
+  }, []);
 
   const handleCandidateClick = (candidate: CandidateDetailsType) => {
     if (expandedCandidateId === candidate.id) {
@@ -213,12 +280,22 @@ function App() {
                 onFilesUploaded={handleFilesUploaded}
                 uploadedCVs={uploadedCVs}
                 onRemoveCV={handleRemoveCV}
+                onProcessResumes={handleProcessResumes}
+                selectedResumeIds={selectedResumeIds}
+                onResumeSelectionChange={handleResumeSelectionChange}
+              />
+
+              {/* Index Build Progress */}
+              <IndexBuildProgress
+                buildId={indexBuildId}
+                onComplete={() => setIndexBuildId(null)}
               />
 
               {/* Evaluation Control */}
               <EvaluationControl
                 jobOffer={jobOffer}
                 cvCount={uploadedCVs.length}
+                selectedResumeCount={selectedResumeIds.length}
                 isEvaluating={false}
                 onStartEvaluation={handleStartEvaluation}
               />

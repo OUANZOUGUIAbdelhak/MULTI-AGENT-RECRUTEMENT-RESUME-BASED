@@ -30,13 +30,13 @@ npm install
 
 ### Configuration
 
-Create a `.env` file in the `frontend` directory (optional):
+Create a `.env` file in the `frontend` directory:
 
 ```env
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-If not configured, the app will use mock data.
+**Important:** The frontend requires the backend API to be running. Start the backend first (see Backend Setup below).
 
 ### Development
 
@@ -196,16 +196,54 @@ Final decision card highlighting:
 
 ## 🔌 Backend Integration
 
-The app includes API service structure in `src/services/api.ts`:
-- `uploadCVs()` - Upload CV files to backend
-- `startEvaluation()` - Start the evaluation process
-- `getEvaluationStatus()` - Get current evaluation status
-- `pollEvaluationStatus()` - Poll for real-time updates
+The frontend is fully connected to the Python backend API. The backend uses:
+- **Groq API** for LLM processing
+- **LlamaIndex + ChromaDB** for RAG
+- **Multi-agent system** (5 agents) for candidate evaluation
 
-To connect to your backend:
-1. Set `VITE_API_BASE_URL` in `.env`
-2. Ensure your backend implements the expected endpoints
-3. The app will automatically use real API calls instead of mocks
+### Backend Setup
+
+1. **Install Python dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Configure API keys** in `Config.yaml`:
+   ```yaml
+   groq:
+     api_key: "your-groq-api-key"
+   ```
+
+3. **Start the backend API:**
+   ```bash
+   # Windows
+   python backend_api.py
+   # or
+   start_backend.bat
+   
+   # Linux/Mac
+   python backend_api.py
+   # or
+   ./start_backend.sh
+   ```
+
+4. **Start the frontend:**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+The backend API runs on `http://localhost:8000` and the frontend connects automatically.
+
+### API Endpoints Used
+
+- `POST /api/upload-cvs` - Upload CV files
+- `POST /api/start-evaluation` - Start evaluation
+- `GET /api/evaluation/{id}` - Get evaluation status (polled every 2s)
+- `POST /api/build-index` - Rebuild RAG index
+
+See `README_BACKEND_API.md` in the project root for full API documentation.
 
 ## 🔄 Agent Simulation
 

@@ -2,7 +2,7 @@
 
 paths:
   data_dir: "./DATA/raw"
-  vectorstore_dir: "./vectorstore"
+  vectorstore_dir: "./DATA/vectorstore"
 
 embedding:
   model_name: "BAAI/bge-large-en-v1.5"
