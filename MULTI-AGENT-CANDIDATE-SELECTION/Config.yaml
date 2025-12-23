@@ -1,0 +1,21 @@
+# Configuration file for RAG System
+
+paths:
+  data_dir: "./DATA/raw"
+  vectorstore_dir: "./vectorstore"
+
+embedding:
+  model_name: "BAAI/bge-large-en-v1.5"
+
+document_processing:
+  chunk_size: 1024
+  chunk_overlap: 128
+
+groq:
+  api_key: "Your API Key"  
+  model: "llama-3.3-70b-versatile"
+
+gemini:
+  api_key: null  # Set your Gemini API key here or use GEMINI_API_KEY environment variable
+  model: "gemini-2.0-flash"
+
