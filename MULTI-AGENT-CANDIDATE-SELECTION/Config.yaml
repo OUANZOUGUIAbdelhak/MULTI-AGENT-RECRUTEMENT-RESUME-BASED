@@ -12,7 +12,7 @@ document_processing:
   chunk_overlap: 128
 
 groq:
-  api_key: "Your API Key"  
+  api_key: "Your Groq API Key"  
   model: "llama-3.3-70b-versatile"
 
 gemini:
