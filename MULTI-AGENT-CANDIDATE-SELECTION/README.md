@@ -2,6 +2,12 @@
 
 Un système automatisé de sélection de candidats utilisant une architecture multi-agents combinant RAG (LlamaIndex + ChromaDB), IA générative et raisonnement multi-agent.
 
+## 🚀 Quick Start
+
+**New to this project?** Start here: **[START_HERE.md](START_HERE.md)** - Complete setup guide in 3 steps!
+
+For detailed documentation, continue reading below.
+
 ## ✨ Fonctionnalités
 
 - **🤖 Architecture Multi-Agents**: 5 agents spécialisés évaluent les candidats sous différents angles
