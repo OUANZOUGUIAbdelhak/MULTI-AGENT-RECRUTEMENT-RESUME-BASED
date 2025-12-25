@@ -1,65 +1,49 @@
-ÉMILIE GIRARD
-Product Manager
+EMILIE GIRARD
+Product Manager | Data Products
 
 Email: emilie.girard@email.com
-Téléphone: +33 6 78 90 12 34
+Téléphone: +33 6 67 89 01 23
 LinkedIn: linkedin.com/in/emilie-girard-pm
-Localisation: Nantes, France
+Localisation: Paris, France
 
-PROFIL
-Product Manager avec 5 ans d'expérience en gestion de produits digitaux, 
-stratégie produit et développement agile. Expertise en méthodologies Scrum et Kanban.
+PROFIL PROFESSIONNEL
+Product Manager avec 5 ans d'expérience en gestion de produits data et analytics. 
+Expérience en collaboration avec équipes techniques et data science. 
+Passionnée par les produits data-driven et l'innovation.
 
-EXPÉRIENCE
+EXPÉRIENCE PROFESSIONNELLE
 
-Product Manager Senior | ProductTech | 2020 - Présent
-- Gestion du produit principal (500K+ utilisateurs)
-- Définition de la roadmap produit et prioritisation des features
-- Collaboration avec les équipes engineering, design et marketing
-- Augmentation de l'engagement utilisateur de 45%
-- Méthodologie: Scrum, Agile, Lean Startup
+Product Manager | DataProducts Inc | 2019 - Présent
+- Gestion de produits data et analytics
+- Collaboration avec équipes data science et engineering
+- Définition de roadmap produit
+- Analyse de métriques et KPIs
+- Technologies: SQL, Python (basique), Tableau, Power BI
 
-Product Manager | StartupProduct | 2018 - 2020
-- Lancement de 2 nouveaux produits digitaux
-- Gestion de backlog et user stories
-- Analyse de métriques produit (A/B testing)
-- Technologies: Jira, Confluence, Mixpanel, Amplitude
+Product Manager Junior | TechProducts | 2018 - 2019
+- Gestion de produits techniques
+- Collaboration avec équipes développement
+- Analyse de données utilisateurs
+- Technologies: SQL, Excel, Tableau
 
-Associate Product Manager | TechCorp | 2017 - 2018
-- Support au Product Manager principal
-- Recherche utilisateur et interviews
-- Analyse de la concurrence
-
-COMPÉTENCES
-- Product Management: Roadmap, Backlog, User Stories, Prioritization
-- Méthodologies: Scrum, Kanban, Agile, Lean Startup
-- Analytics: Google Analytics, Mixpanel, Amplitude, Hotjar
-- Outils: Jira, Confluence, Figma, Miro, Notion
-- Techniques: A/B Testing, User Research, Wireframing
+COMPÉTENCES TECHNIQUES
+- Langages: SQL (intermédiaire), Python (basique)
+- Outils: Tableau, Power BI, Excel, Jira
+- Bases de données: PostgreSQL (basique)
 
 FORMATION
-Master en Management et Innovation | Audencia Business School | 2017
-- Spécialisation: Digital Innovation
+Master en Management | HEC Paris | 2018
+- Spécialisation: Innovation et Technologie
 
-Licence en Économie | Université de Nantes | 2015
-
-CERTIFICATIONS
-- Certified Scrum Product Owner (CSPO) (2021)
-- Google Analytics Certified (2020)
-
-RÉALISATIONS
-- Lancement réussi de 3 produits (100K+ utilisateurs au total)
-- Augmentation du taux de conversion de 25% grâce à l'optimisation UX
-- Réduction du time-to-market de 30%
+Licence en Économie | Université Paris-Sorbonne | 2016
 
 LANGUES
 - Français: Natif
-- Anglais: Courant
-- Espagnol: Intermédiaire
+- Anglais: Courant (TOEIC 980)
 
 SOFT SKILLS
+- Leadership
+- Communication
+- Esprit d'équipe
+- Résolution de problèmes
 - Vision stratégique
-- Empathie utilisateur
-- Leadership et influence
-- Communication claire et synthèse
-

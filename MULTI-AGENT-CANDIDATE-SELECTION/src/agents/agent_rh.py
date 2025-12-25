@@ -139,39 +139,194 @@ class AgentRH:
         return exp_min, exp_max
     
     def _extract_skills(self, desc_lower: str, description: str) -> tuple:
-        """Extract required and optional skills."""
-        # Common technical skills
-        all_skills = [
-            "python", "java", "javascript", "typescript", "c++", "c#", "go", "rust",
-            "sql", "nosql", "mongodb", "postgresql", "mysql",
-            "machine learning", "deep learning", "tensorflow", "pytorch", "scikit-learn",
-            "pandas", "numpy", "spark", "hadoop",
-            "aws", "azure", "gcp", "cloud", "docker", "kubernetes",
-            "react", "vue", "angular", "node.js", "django", "flask",
-            "power bi", "tableau", "qlik", "looker",
-            "git", "ci/cd", "jenkins", "terraform", "ansible"
+        """Extract required and optional skills with better section detection."""
+        # Find sections for required vs optional skills
+        required_section_start = -1
+        optional_section_start = -1
+        
+        # Look for section headers
+        required_markers = [
+            "compétences techniques requises", "compétences requises", 
+            "requis", "obligatoire", "must have", "nécessaire"
+        ]
+        optional_markers = [
+            "compétences appréciées", "compétences optionnelles",
+            "optionnel", "nice to have", "souhaitable", "bonus", "apprécié"
         ]
         
+        # Find where required section starts
+        for marker in required_markers:
+            idx = desc_lower.find(marker)
+            if idx != -1:
+                required_section_start = idx
+                break
+        
+        # Find where optional section starts
+        for marker in optional_markers:
+            idx = desc_lower.find(marker)
+            if idx != -1:
+                optional_section_start = idx
+                break
+        
+        # If we found sections, extract skills from appropriate sections
         skills_obligatoires = []
         skills_optionnelles = []
         
-        # Check for required skills (often marked with "requis", "obligatoire", "must have")
-        required_keywords = ["requis", "obligatoire", "must have", "nécessaire", "essentiel"]
-        optional_keywords = ["optionnel", "nice to have", "souhaitable", "bonus"]
+        # Common technical skills with variations
+        all_skills = [
+            "python", "java", "javascript", "typescript", "c++", "c#", "go", "rust",
+            "sql", "nosql", "mongodb", "postgresql", "mysql",
+            "machine learning", "ml", "deep learning", "tensorflow", "pytorch", "scikit-learn", "scikit learn", "sklearn",
+            "pandas", "numpy", "spark", "apache spark", "pyspark", "hadoop",
+            "aws", "azure", "gcp", "google cloud", "cloud", "docker", "kubernetes", "k8s",
+            "react", "vue", "angular", "node.js", "nodejs", "django", "flask",
+            "power bi", "powerbi", "tableau", "qlik", "looker",
+            "git", "github", "ci/cd", "cicd", "jenkins", "terraform", "ansible",
+            "mlops", "mlflow", "kubeflow", "airflow", "apache airflow",
+            "r"
+        ]
+        
+        # Normalize skill names for matching
+        skill_normalizations = {
+            "scikit-learn": ["scikit-learn", "scikit learn", "sklearn"],
+            "apache spark": ["apache spark", "spark", "pyspark"],
+            "power bi": ["power bi", "powerbi"],
+            "node.js": ["node.js", "nodejs"],
+            "machine learning": ["machine learning", "ml"],
+            "ci/cd": ["ci/cd", "cicd"],
+            "apache airflow": ["apache airflow", "airflow"]
+        }
         
         for skill in all_skills:
-            if skill in desc_lower:
-                # Check if it's marked as required or optional
-                skill_context = self._get_skill_context(description, skill)
-                if any(kw in skill_context.lower() for kw in required_keywords):
-                    skills_obligatoires.append(skill.title())
-                elif any(kw in skill_context.lower() for kw in optional_keywords):
-                    skills_optionnelles.append(skill.title())
-                else:
-                    # Default to required if mentioned prominently
-                    skills_obligatoires.append(skill.title())
+            # Check all variations of the skill
+            skill_variations = [skill]
+            for normalized, variants in skill_normalizations.items():
+                if skill in variants:
+                    skill_variations.extend(variants)
+                    break
+            
+            found_in_required = False
+            found_in_optional = False
+            
+            for variation in skill_variations:
+                if variation not in desc_lower:
+                    continue
+                
+                # Find all occurrences
+                import re
+                matches = list(re.finditer(re.escape(variation), desc_lower))
+                
+                for match in matches:
+                    match_pos = match.start()
+                    
+                    # Determine which section this match is in
+                    # Calculate section boundaries
+                    required_section_end = optional_section_start if optional_section_start != -1 else len(desc_lower)
+                    optional_section_end = len(desc_lower)
+                    
+                    # Find end markers for sections
+                    if required_section_start != -1:
+                        # Look for end of required section
+                        end_markers = ["compétences appréciées", "soft skills", "langues", "avantages"]
+                        for end_marker in end_markers:
+                            end_idx = desc_lower.find(end_marker, required_section_start)
+                            if end_idx != -1 and end_idx < required_section_end:
+                                required_section_end = end_idx
+                    
+                    if optional_section_start != -1:
+                        # Look for end of optional section
+                        end_markers = ["soft skills", "langues", "avantages"]
+                        for end_marker in end_markers:
+                            end_idx = desc_lower.find(end_marker, optional_section_start)
+                            if end_idx != -1 and end_idx < optional_section_end:
+                                optional_section_end = end_idx
+                    
+                    # Determine which section this match is in
+                    if required_section_start != -1 and optional_section_start != -1:
+                        # Both sections found - check boundaries
+                        if required_section_start <= match_pos < required_section_end:
+                            found_in_required = True
+                        elif optional_section_start <= match_pos < optional_section_end:
+                            found_in_optional = True
+                    elif required_section_start != -1:
+                        # Only required section found - check boundaries
+                        if required_section_start <= match_pos < required_section_end:
+                            found_in_required = True
+                    elif optional_section_start != -1:
+                        # Only optional section found - check boundaries
+                        if optional_section_start <= match_pos < optional_section_end:
+                            found_in_optional = True
+                    else:
+                        # No clear sections, use context-based detection
+                        context = self._get_skill_context(description, variation, window=100)
+                        context_lower = context.lower()
+                        if any(kw in context_lower for kw in ["requis", "obligatoire", "must have", "nécessaire", "essentiel", "maîtrise", "expérience avec"]):
+                            found_in_required = True
+                        elif any(kw in context_lower for kw in ["optionnel", "nice to have", "souhaitable", "bonus", "apprécié"]):
+                            found_in_optional = True
+                        else:
+                            # Default: if mentioned in "Compétences Techniques Requises" section, it's required
+                            # Otherwise, check proximity to "appréciées"
+                            if "compétences techniques requises" in desc_lower[:match_pos + 500]:
+                                found_in_required = True
+                            elif "appréciées" in desc_lower[max(0, match_pos-200):match_pos+200]:
+                                found_in_optional = True
+                            else:
+                                # Default to required for core skills, optional for others
+                                core_skills = ["python", "sql", "scikit-learn", "tensorflow", "pytorch", "spark", "hadoop", "postgresql", "mongodb", "git"]
+                                if any(cs in variation for cs in core_skills):
+                                    found_in_required = True
+                                else:
+                                    found_in_optional = True
+                    
+                    if found_in_required or found_in_optional:
+                        break
+                
+                if found_in_required or found_in_optional:
+                    break
+            
+            # Add to appropriate list
+            skill_name = skill.title()
+            # Handle special cases and normalize to avoid duplicates
+            if skill == "scikit-learn" or skill == "scikit learn" or skill == "sklearn":
+                skill_name = "Scikit-learn"
+            elif skill == "power bi" or skill == "powerbi":
+                skill_name = "Power BI"
+            elif skill == "node.js" or skill == "nodejs":
+                skill_name = "Node.js"
+            elif skill == "apache spark" or skill == "pyspark" or skill == "spark":
+                skill_name = "Apache Spark"  # Normalize all spark variants
+            elif skill == "apache airflow" or skill == "airflow":
+                skill_name = "Apache Airflow"
+            elif skill == "ci/cd" or skill == "cicd":
+                skill_name = "CI/CD"
+            elif skill == "ml" or skill == "machine learning":
+                skill_name = "Machine Learning"
+            elif skill == "aws" or skill == "azure" or skill == "gcp" or skill == "google cloud":
+                skill_name = "Cloud"  # Group cloud providers
+            elif skill == "mlops" or skill == "mlflow" or skill == "kubeflow":
+                skill_name = "MLOps"  # Group MLOps tools
+            
+            # Check for duplicates before adding
+            if found_in_required:
+                # Remove any duplicates or more specific versions
+                skills_obligatoires = [s for s in skills_obligatoires if s.lower() != skill_name.lower() and skill_name.lower() not in s.lower()]
+                if skill_name not in skills_obligatoires:
+                    skills_obligatoires.append(skill_name)
+            elif found_in_optional:
+                # Remove any duplicates or more specific versions
+                skills_optionnelles = [s for s in skills_optionnelles if s.lower() != skill_name.lower() and skill_name.lower() not in s.lower()]
+                if skill_name not in skills_optionnelles:
+                    skills_optionnelles.append(skill_name)
         
-        return list(set(skills_obligatoires)), list(set(skills_optionnelles))
+        # Final cleanup: remove duplicates and normalize
+        skills_obligatoires = list(dict.fromkeys(skills_obligatoires))  # Preserve order, remove duplicates
+        skills_optionnelles = list(dict.fromkeys(skills_optionnelles))
+        
+        # Remove skills from optional if they're already in required
+        skills_optionnelles = [s for s in skills_optionnelles if s not in skills_obligatoires]
+        
+        return skills_obligatoires, skills_optionnelles
     
     def _get_skill_context(self, text: str, skill: str, window: int = 50) -> str:
         """Get context around skill mention."""

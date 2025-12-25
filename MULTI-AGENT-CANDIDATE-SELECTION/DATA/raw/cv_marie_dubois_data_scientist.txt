@@ -1,5 +1,5 @@
 MARIE DUBOIS
-Data Scientist
+Data Scientist | Machine Learning & Data Analysis
 
 Email: marie.dubois@email.com
 Téléphone: +33 6 12 34 56 78
@@ -12,19 +12,19 @@ Expertise en Python, SQL, et frameworks ML. Passionnée par l'IA et les solution
 
 EXPÉRIENCE PROFESSIONNELLE
 
-Data Scientist Senior | TechCorp | 2021 - Présent
+Data Scientist | TechCorp | 2019 - Présent
 - Développement de modèles de prédiction pour l'optimisation des ventes (amélioration de 15%)
 - Mise en place de pipelines de données avec Apache Spark et Airflow
 - Collaboration avec les équipes produit pour intégrer des recommandations ML
 - Technologies: Python, Scikit-learn, TensorFlow, PySpark, SQL
 
-Data Scientist | DataStart | 2019 - 2021
+Data Scientist | DataStart | 2017 - 2019
 - Analyse de données clients pour améliorer la rétention (réduction du churn de 20%)
 - Création de dashboards interactifs avec Tableau et Power BI
 - Modélisation prédictive pour la détection de fraude
 - Technologies: Python, Pandas, Scikit-learn, SQL, Tableau
 
-Stagiaire Data Analyst | FinanceLab | 2018 - 2019
+Stagiaire Data Analyst | FinanceLab | 2016 - 2017
 - Analyse de données financières et création de rapports
 - Support à l'équipe analytics
 
@@ -33,14 +33,14 @@ COMPÉTENCES TECHNIQUES
 - ML/DL: Scikit-learn, TensorFlow, Keras, XGBoost
 - Big Data: Spark, Hadoop, Airflow
 - Visualisation: Tableau, Power BI, Matplotlib, Seaborn
-- Outils: Git, Docker, Kubernetes, Jupyter, VS Code
+- Outils: Git, Docker, Jupyter, VS Code
 
 FORMATION
-Master en Data Science | Université Paris-Saclay | 2018
+Master en Data Science | Université Paris-Saclay | 2016
 - Spécialisation: Machine Learning et Big Data
 - Mémoire: "Prédiction de séries temporelles avec réseaux de neurones"
 
-Licence en Mathématiques Appliquées | Université Paris-Diderot | 2016
+Licence en Mathématiques Appliquées | Université Paris-Diderot | 2014
 
 PROJETS PERSONNELS
 - Système de recommandation de films avec collaborative filtering
@@ -57,4 +57,3 @@ SOFT SKILLS
 - Résolution de problèmes complexes
 - Communication claire des résultats techniques
 - Curiosité et apprentissage continu
-

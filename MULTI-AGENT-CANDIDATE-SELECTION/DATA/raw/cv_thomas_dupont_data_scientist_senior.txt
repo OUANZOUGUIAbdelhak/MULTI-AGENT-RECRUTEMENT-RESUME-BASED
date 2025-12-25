@@ -1,0 +1,118 @@
+THOMAS DUPONT
+Data Scientist Senior | Machine Learning & Big Data
+
+Email: thomas.dupont@email.com
+Téléphone: +33 6 98 76 54 32
+LinkedIn: linkedin.com/in/thomas-dupont-datascience
+GitHub: github.com/thomasdupont-ds
+Localisation: Paris, France
+
+PROFIL PROFESSIONNEL
+Data Scientist Senior avec 6 ans d'expérience en data science et machine learning. 
+Expert en développement et déploiement de modèles de machine learning en production. 
+Spécialiste en analyse de grandes quantités de données pour identifier des insights business. 
+Expérience solide en collaboration avec équipes produit et engineering pour intégrer des solutions ML.
+Passionné par l'intelligence artificielle et les solutions data-driven. 
+Excellente capacité d'analyse et de résolution de problèmes. Esprit d'équipe et collaboration efficace.
+Communication claire des résultats techniques. Curiosité et veille technologique. Autonomie et proactivité.
+
+EXPÉRIENCE PROFESSIONNELLE
+
+Data Scientist Senior | DataCorp Solutions | 2020 - Présent (4 ans)
+- Développement et déploiement de modèles de machine learning en production (classification, régression, clustering)
+- Conception et développement de modèles prédictifs pour l'optimisation des opérations (amélioration de 20%)
+- Feature engineering et preprocessing de données massives avec Apache Spark
+- Mise en place de pipelines de données avec Apache Spark
+- Déploiement de modèles en production avec Docker sur AWS
+- Analyse de grandes quantités de données pour identifier des insights business stratégiques
+- Collaboration étroite avec les équipes produit et engineering pour intégrer des solutions ML
+- Création de dashboards interactifs avec Power BI et Tableau pour présenter les résultats aux stakeholders
+- Documentation technique complète et présentation régulière aux stakeholders
+- Encadrement et formation de 2 data scientists juniors
+- Mener des projets de recherche et développement en IA
+- Technologies: Python (avancé), SQL (avancé), Scikit-learn, TensorFlow, PyTorch, Apache Spark, Hadoop, PostgreSQL, MongoDB, Git, AWS, Docker, Power BI, Tableau, R
+
+Data Scientist | TechAnalytics | 2018 - 2020 (2 ans)
+- Développement de modèles de machine learning pour l'optimisation des ventes
+- Analyse de grandes quantités de données clients pour améliorer la rétention (réduction du churn de 18%)
+- Mise en place de pipelines de données avec Apache Spark
+- Modélisation prédictive pour la détection d'anomalies
+- Création de visualisations avancées avec Tableau
+- Collaboration avec les équipes produit pour intégrer des recommandations ML
+- Technologies: Python, Scikit-learn, TensorFlow, Apache Spark, Hadoop, SQL, PostgreSQL, MongoDB, Tableau, Git
+
+Data Scientist Junior | StartupData | 2017 - 2018 (1 an)
+- Développement de modèles de classification et régression pour l'analyse prédictive
+- Feature engineering et preprocessing de données volumineuses
+- Création de rapports d'analyse et visualisations avec Python (Matplotlib, Seaborn)
+- Support à l'équipe analytics et participation aux projets de recherche et développement en IA
+- Technologies: Python, Scikit-learn, Pandas, NumPy, SQL, PostgreSQL, Git
+
+COMPÉTENCES TECHNIQUES
+
+Langages de Programmation:
+- Python (avancé - 6 ans d'expérience): Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, XGBoost
+- SQL (avancé): Requêtes complexes, optimisation, PostgreSQL, MongoDB
+- R (maîtrise): Analyse statistique, visualisation, modélisation
+
+Machine Learning & Deep Learning:
+- Frameworks ML: Scikit-learn (classification, régression, clustering), TensorFlow, PyTorch
+- Techniques: Feature engineering, cross-validation, hyperparameter tuning, ensemble methods
+- Deep Learning: Réseaux de neurones, CNN, RNN, LSTM
+
+Big Data & Data Engineering:
+- Apache Spark (PySpark): Traitement de données distribuées, Spark SQL, Spark MLlib
+- Hadoop: HDFS, MapReduce
+
+Bases de Données:
+- PostgreSQL: Design de schémas, optimisation de requêtes, indexation
+- MongoDB: NoSQL, agrégations complexes
+
+Cloud & DevOps:
+- AWS: EC2, S3, SageMaker, ECS, Lambda
+- Docker: Containerisation d'applications ML
+- Git: Version control, workflows collaboratifs, bonnes pratiques de développement
+
+Visualisation & Reporting:
+- Power BI: Création de dashboards interactifs, rapports business
+- Tableau: Visualisations avancées, analyses exploratoires
+- Python: Matplotlib, Seaborn, Plotly
+
+FORMATION
+
+Master en Data Science | Université Paris-Saclay | 2017
+- Spécialisation: Machine Learning, Big Data, Intelligence Artificielle
+- Mémoire: "Modèles prédictifs pour l'analyse de données massives avec Apache Spark"
+- Mention Très Bien
+
+Licence en Mathématiques Appliquées | Université Paris-Diderot | 2015
+- Spécialisation: Statistiques, Probabilités, Algorithmes
+- Mention Bien
+
+CERTIFICATIONS
+- AWS Certified Machine Learning - Specialty (2022)
+- Databricks Certified Associate Developer for Apache Spark (2021)
+
+PROJETS PERSONNELS
+- Système de recommandation en temps réel avec collaborative filtering et deep learning
+- Analyse de sentiment sur réseaux sociaux avec NLP et transformers
+- Pipeline de données avec Apache Spark pour traitement de grandes quantités de données
+- Kaggle competitions: Top 5% dans plusieurs compétitions de machine learning
+
+LANGUES
+- Français: Natif (Courant)
+- Anglais: Courant (TOEIC 970) - Communication technique et présentation en anglais
+
+SOFT SKILLS
+- Excellente capacité d'analyse et de résolution de problèmes complexes
+- Esprit d'équipe et collaboration efficace avec équipes multidisciplinaires
+- Communication claire des résultats techniques aux stakeholders non-techniques
+- Curiosité et veille technologique constante (lecture de papers, conférences)
+- Autonomie et proactivité dans la gestion de projets
+- Leadership et encadrement d'équipes techniques
+- Gestion de projet Agile/Scrum
+
+CENTRES D'INTÉRÊT
+- Veille technologique en IA et machine learning
+- Participation à des hackathons et compétitions de data science
+- Lecture de papers scientifiques et articles techniques

@@ -127,15 +127,24 @@ class RAGSystem:
             chunk_overlap=self.chunk_overlap
         )
         
-        # Step 4: Create or get ChromaDB collection
+        # Step 4: Create or recreate ChromaDB collection (delete old one to avoid duplicates)
         print(f"\n💾 Step 4: Setting up ChromaDB vector store...")
-        chroma_collection = self.chroma_client.get_or_create_collection(
+        try:
+            # Try to delete existing collection if it exists
+            self.chroma_client.delete_collection(name=self.collection_name)
+            print(f"   🗑️  Deleted existing collection '{self.collection_name}' to avoid duplicates")
+        except ValueError:
+            # Collection doesn't exist, that's fine
+            print(f"   ℹ️  No existing collection found, creating new one")
+        
+        # Create fresh collection
+        chroma_collection = self.chroma_client.create_collection(
             name=self.collection_name
         )
         vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
         
-        print(f"   ✅ ChromaDB collection '{self.collection_name}' ready")
+        print(f"   ✅ ChromaDB collection '{self.collection_name}' created")
         
         # Step 5: Create index with transformations
         print(f"\n🔨 Step 5: Creating vector index...")

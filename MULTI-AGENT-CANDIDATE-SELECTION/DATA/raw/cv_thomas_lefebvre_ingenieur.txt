@@ -1,68 +1,49 @@
 THOMAS LEFEBVRE
-Ingénieur DevOps / Cloud Architect
+Ingénieur Logiciel | Backend Development
 
 Email: thomas.lefebvre@email.com
-Téléphone: +33 6 45 67 89 01
-GitHub: github.com/thomaslefebvre
-Localisation: Toulouse, France
+Téléphone: +33 6 01 23 45 67
+LinkedIn: linkedin.com/in/thomas-lefebvre-eng
+GitHub: github.com/thomaslefebvre-dev
+Localisation: Paris, France
 
-PROFIL
-Ingénieur DevOps avec 8 ans d'expérience en infrastructure cloud, automatisation 
-et CI/CD. Expert en AWS, Kubernetes et infrastructure as code. Passionné par l'automatisation.
+PROFIL PROFESSIONNEL
+Ingénieur Logiciel avec 5 ans d'expérience en développement backend et architecture logicielle. 
+Expertise en Java, Python et bases de données. Passionné par le développement logiciel et l'architecture.
 
-EXPÉRIENCE
+EXPÉRIENCE PROFESSIONNELLE
 
-Ingénieur DevOps Senior | CloudTech | 2020 - Présent
-- Architecture et déploiement d'infrastructures cloud sur AWS
-- Mise en place de pipelines CI/CD avec Jenkins et GitLab CI
-- Gestion de clusters Kubernetes (50+ nodes)
-- Réduction des coûts infrastructure de 30% grâce à l'optimisation
-- Technologies: AWS, Kubernetes, Terraform, Ansible, Jenkins
+Ingénieur Logiciel Senior | SoftwareCorp | 2019 - Présent
+- Développement backend avec Java et Python
+- Conception d'architectures logicielles
+- Gestion de bases de données PostgreSQL
+- Collaboration avec équipes frontend et DevOps
+- Technologies: Java, Python, PostgreSQL, Git, Docker
 
-Ingénieur DevOps | TechStartup | 2018 - 2020
-- Automatisation des déploiements avec Docker et Kubernetes
-- Mise en place de monitoring avec Prometheus et Grafana
-- Gestion de l'infrastructure avec Terraform
-- Technologies: Docker, Kubernetes, Terraform, AWS, GitLab CI
+Ingénieur Logiciel | TechSolutions | 2018 - 2019
+- Développement backend
+- API REST avec Python et Flask
+- Bases de données PostgreSQL
+- Technologies: Python, Flask, PostgreSQL, Git
 
-Ingénieur Système | ITCorp | 2016 - 2018
-- Administration de serveurs Linux
-- Gestion de l'infrastructure réseau
-- Support technique niveau 3
-
-COMPÉTENCES
-- Cloud: AWS (EC2, S3, RDS, Lambda, EKS), Azure, GCP
-- Containers: Docker, Kubernetes, Docker Compose
-- IaC: Terraform, CloudFormation, Ansible
-- CI/CD: Jenkins, GitLab CI, GitHub Actions, CircleCI
-- Monitoring: Prometheus, Grafana, ELK Stack, CloudWatch
-- Scripting: Bash, Python, PowerShell
-- OS: Linux (Ubuntu, CentOS, RHEL), Windows Server
+COMPÉTENCES TECHNIQUES
+- Langages: Java (avancé), Python (avancé), SQL (intermédiaire)
+- Frameworks: Spring Boot, Flask, Django
+- Bases de données: PostgreSQL, MongoDB
+- Outils: Git, Docker, Jenkins
 
 FORMATION
-Master en Informatique | INP Toulouse | 2016
-- Spécialisation: Systèmes et Réseaux
+Diplôme d'Ingénieur | École Centrale Paris | 2018
+- Spécialisation: Génie Logiciel
 
-DUT Réseaux et Télécommunications | IUT Toulouse | 2014
-
-CERTIFICATIONS
-- AWS Certified Solutions Architect - Professional (2023)
-- Certified Kubernetes Administrator (CKA) (2022)
-- HashiCorp Certified: Terraform Associate (2021)
-
-PROJETS
-- Migration complète vers le cloud AWS (0 downtime)
-- Automatisation complète du déploiement (réduction de 80% du temps)
-- Mise en place d'une infrastructure multi-région
+Classes Préparatoires | Lycée Louis-le-Grand | 2015
 
 LANGUES
 - Français: Natif
-- Anglais: Courant
-- Espagnol: Notions
+- Anglais: Courant (TOEIC 960)
 
 SOFT SKILLS
-- Résolution de problèmes complexes
-- Autonomie et proactivité
-- Veille technologique constante
+- Résolution de problèmes
 - Esprit d'équipe
-
+- Communication technique
+- Autonomie

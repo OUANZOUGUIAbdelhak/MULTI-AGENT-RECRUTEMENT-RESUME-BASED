@@ -1,65 +1,52 @@
 NICOLAS PETIT
-Machine Learning Engineer
+Machine Learning Engineer | Data Science
 
 Email: nicolas.petit@email.com
-Téléphone: +33 6 89 01 23 45
-GitHub: github.com/nicolaspetit
+Téléphone: +33 6 23 45 67 89
+LinkedIn: linkedin.com/in/nicolas-petit-ml
+GitHub: github.com/nicolaspetit-ml
 Localisation: Paris, France
 
-PROFIL
-Machine Learning Engineer avec 4 ans d'expérience en développement de modèles ML, 
-MLOps et déploiement de solutions d'IA en production. Expertise en Python, TensorFlow et cloud.
+PROFIL PROFESSIONNEL
+Machine Learning Engineer avec 5 ans d'expérience en développement de modèles ML et déploiement en production. 
+Expertise en Python, TensorFlow, et infrastructures cloud. Passionné par l'ingénierie ML et les systèmes scalables.
 
-EXPÉRIENCE
+EXPÉRIENCE PROFESSIONNELLE
 
-ML Engineer | AIStartup | 2020 - Présent
-- Développement et déploiement de modèles ML en production
-- Mise en place de pipelines MLOps avec MLflow et Kubeflow
-- Optimisation de modèles pour la production (réduction latence de 60%)
-- Collaboration avec les data scientists pour industrialiser les modèles
-- Technologies: Python, TensorFlow, PyTorch, MLflow, Kubernetes, AWS
-
-Data Scientist / ML Engineer | DataLab | 2019 - 2020
-- Développement de modèles de prédiction (NLP, Computer Vision)
+Machine Learning Engineer | MLTech Solutions | 2019 - Présent
+- Développement et déploiement de modèles de machine learning en production
+- Conception de modèles prédictifs (classification, régression)
 - Feature engineering et preprocessing de données
-- Technologies: Python, Scikit-learn, TensorFlow, Spark
+- Mise en place de pipelines avec Apache Spark
+- Déploiement sur AWS avec Docker
+- Technologies: Python, Scikit-learn, TensorFlow, PyTorch, Spark, PostgreSQL, AWS, Docker, Git
 
-Stagiaire ML | ResearchLab | 2018 - 2019
-- Recherche sur les réseaux de neurones
-- Implémentation d'algorithmes ML
+ML Engineer Junior | DataLab | 2017 - 2019
+- Développement de modèles de machine learning
+- Preprocessing de données
+- Création de visualisations avec Python
+- Technologies: Python, Scikit-learn, TensorFlow, SQL, PostgreSQL, Git
 
-COMPÉTENCES
-- ML/DL: TensorFlow, PyTorch, Scikit-learn, XGBoost, LightGBM
-- Langages: Python (avancé), SQL, Scala
-- MLOps: MLflow, Kubeflow, Airflow, Docker, Kubernetes
-- Cloud: AWS (SageMaker, EC2, S3), GCP (Vertex AI)
+COMPÉTENCES TECHNIQUES
+- Langages: Python (avancé), SQL (avancé)
+- ML/DL: Scikit-learn, TensorFlow, PyTorch
 - Big Data: Spark, Hadoop
-- Outils: Git, Jupyter, VS Code, DVC
+- Bases de données: PostgreSQL, MongoDB
+- Cloud: AWS (EC2, S3)
+- Outils: Git, Docker
 
 FORMATION
-Master en Intelligence Artificielle | École Polytechnique | 2019
-- Spécialisation: Machine Learning et Deep Learning
-- Mémoire: "Optimisation de modèles de deep learning pour la production"
+Master en Informatique | École Centrale Paris | 2017
+- Spécialisation: Machine Learning, Intelligence Artificielle
 
-Ingénieur en Informatique | École Centrale Paris | 2017
-
-PUBLICATIONS
-- 2 publications dans des conférences ML
-- Contribution open-source à TensorFlow
-
-PROJETS
-- Système de recommandation en temps réel (1M+ requêtes/jour)
-- Modèle de détection de fraude (précision 95%)
-- Pipeline MLOps automatisé (déploiement en 1 clic)
+Licence en Informatique | Université Paris-Saclay | 2015
 
 LANGUES
 - Français: Natif
-- Anglais: Courant
-- Chinois: Notions
+- Anglais: Courant (TOEIC 960)
 
 SOFT SKILLS
-- Résolution de problèmes complexes
-- Veille technologique
-- Collaboration interdisciplinaire
-- Pragmatisme et orientation résultats
-
+- Capacité d'analyse et résolution de problèmes
+- Esprit d'équipe
+- Communication technique
+- Autonomie

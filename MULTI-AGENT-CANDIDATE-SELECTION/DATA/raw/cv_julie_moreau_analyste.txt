@@ -1,64 +1,48 @@
 JULIE MOREAU
-Analyste Business Intelligence
+Data Analyst | Business Intelligence
 
 Email: julie.moreau@email.com
-Téléphone: +33 6 56 78 90 12
-LinkedIn: linkedin.com/in/julie-moreau-bi
-Localisation: Bordeaux, France
+Téléphone: +33 6 34 56 78 90
+LinkedIn: linkedin.com/in/julie-moreau-analyst
+Localisation: Paris, France
 
-PROFIL
-Analyste Business Intelligence avec 4 ans d'expérience en analyse de données, 
-création de dashboards et reporting stratégique. Expertise en SQL, Power BI et Tableau.
+PROFIL PROFESSIONNEL
+Data Analyst avec 4 ans d'expérience en analyse de données et business intelligence. 
+Expertise en SQL, Python et outils de visualisation. Passionnée par l'analyse de données business.
 
-EXPÉRIENCE
+EXPÉRIENCE PROFESSIONNELLE
 
-Analyste BI | DataInsight | 2020 - Présent
-- Développement de dashboards interactifs avec Power BI et Tableau
-- Analyse de données business pour la direction (reporting mensuel)
-- Modélisation de données avec SQL et création de data warehouses
-- Support aux équipes commerciales avec des analyses ad-hoc
-- Technologies: Power BI, Tableau, SQL Server, Excel, Python
+Data Analyst | BusinessAnalytics | 2020 - Présent
+- Analyse de données pour identifier des insights business
+- Création de dashboards avec Power BI et Tableau
+- Requêtes SQL complexes sur PostgreSQL
+- Collaboration avec les équipes produit
+- Technologies: SQL, Python, PostgreSQL, Power BI, Tableau, Excel
 
-Analyste Données Junior | RetailData | 2019 - 2020
-- Extraction et nettoyage de données
-- Création de rapports Excel automatisés
-- Analyse des ventes et performance produits
-- Technologies: Excel, SQL, VBA
+Data Analyst Junior | DataInsights | 2019 - 2020
+- Analyse de données clients
+- Création de rapports avec Excel et Tableau
+- Requêtes SQL
+- Technologies: SQL, Excel, Tableau
 
-Stagiaire Analyste | FinanceGroup | 2018 - 2019
-- Support à l'équipe analytics
-- Création de rapports simples
-
-COMPÉTENCES
-- BI Tools: Power BI (avancé), Tableau (avancé), QlikView
-- Bases de données: SQL Server, MySQL, PostgreSQL
-- Langages: SQL (avancé), Python (intermédiaire), DAX, M (Power Query)
-- Outils: Excel (avancé), VBA, SSIS, SSAS
-- Visualisation: Création de dashboards interactifs
+COMPÉTENCES TECHNIQUES
+- Langages: SQL (avancé), Python (intermédiaire)
+- Bases de données: PostgreSQL, MySQL
+- Visualisation: Power BI, Tableau, Excel
+- Outils: Git
 
 FORMATION
-Master en Statistiques et Analyse de Données | Université de Bordeaux | 2019
-- Spécialisation: Business Intelligence et Data Mining
+Master en Statistiques | Université Paris-Dauphine | 2019
+- Spécialisation: Analyse de données
 
-Licence en Mathématiques | Université de Bordeaux | 2017
-
-CERTIFICATIONS
-- Microsoft Certified: Power BI Data Analyst Associate (2022)
-- Tableau Desktop Specialist (2021)
-
-RÉALISATIONS
-- Création de 20+ dashboards pour différents départements
-- Automatisation de rapports (gain de temps: 15h/semaine)
-- Identification d'opportunités business (augmentation CA de 8%)
+Licence en Mathématiques | Université Paris-Sorbonne | 2017
 
 LANGUES
 - Français: Natif
-- Anglais: Courant
-- Espagnol: Notions
+- Anglais: Courant (TOEIC 920)
 
 SOFT SKILLS
-- Analyse critique et synthèse
-- Communication de données complexes
-- Orientation résultats
-- Collaboration inter-départements
-
+- Capacité d'analyse
+- Communication
+- Esprit d'équipe
+- Autonomie

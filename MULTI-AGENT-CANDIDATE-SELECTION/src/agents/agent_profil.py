@@ -86,12 +86,46 @@ class AgentProfil:
     def _extract_name(self, text: str) -> str:
         """Extract candidate name (usually first line)."""
         lines = text.split('\n')
-        for line in lines[:5]:
+        
+        # Try first few lines
+        for line in lines[:10]:
             line = line.strip()
-            if len(line) > 3 and len(line) < 50:
-                # Check if it looks like a name
-                if re.match(r'^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+(?:\s+[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+)*$', line):
-                    return line
+            if not line:
+                continue
+                
+            # Remove common prefixes/suffixes
+            line_clean = re.sub(r'^\s*[A-Z\s]+\s*\|\s*', '', line)  # Remove "TITLE |" prefix
+            line_clean = re.sub(r'\s*\|\s*[A-Z\s]+$', '', line_clean)  # Remove "| TITLE" suffix
+            line_clean = re.sub(r'^[A-Z\s]+\s*-\s*', '', line_clean)  # Remove "TITLE -" prefix
+            line_clean = line_clean.strip()
+            
+            # Skip if it's clearly not a name (contains @, http, digits, etc.)
+            if '@' in line_clean or 'http' in line_clean.lower() or re.search(r'\d{4}', line_clean):
+                continue
+            
+            if len(line_clean) > 3 and len(line_clean) < 50:
+                # Pattern 1: All caps (ALEXANDRE MARTIN, SARAH BERNARD)
+                if re.match(r'^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ\s]+$', line_clean):
+                    words = line_clean.split()
+                    if 2 <= len(words) <= 4:  # Typically 2-4 words for a name
+                        return line_clean.title()
+                
+                # Pattern 2: Title case (Alexandre Martin, Sarah Bernard)
+                if re.match(r'^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+(?:\s+[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ][a-zàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ]+)+$', line_clean):
+                    words = line_clean.split()
+                    if 2 <= len(words) <= 4:
+                        return line_clean
+        
+        # Fallback: Try to extract from email if available
+        email = self._extract_email(text)
+        if email:
+            # Extract name from email (e.g., "alexandre.martin@email.com" -> "Alexandre Martin")
+            email_prefix = email.split('@')[0]
+            if '.' in email_prefix:
+                name_parts = email_prefix.split('.')
+                if len(name_parts) == 2:
+                    return f"{name_parts[0].title()} {name_parts[1].title()}"
+        
         return "Nom non trouvé"
     
     def _extract_email(self, text: str) -> str:
@@ -223,25 +257,56 @@ class AgentProfil:
         skills = []
         text_lower = text.lower()
         
-        # Common skills
+        # Normalize text for better matching (replace common variations)
+        text_normalized = text_lower.replace("-", " ").replace("_", " ").replace(".", " ")
+        
+        # Common skills with variations
         skill_keywords = [
             "python", "java", "javascript", "typescript", "c++", "c#", "go", "rust",
             "sql", "nosql", "mongodb", "postgresql", "mysql", "redis",
             "machine learning", "deep learning", "ml", "ai", "artificial intelligence",
-            "tensorflow", "pytorch", "scikit-learn", "keras",
+            "tensorflow", "pytorch", "scikit-learn", "scikit learn", "sklearn", "keras",
             "pandas", "numpy", "matplotlib", "seaborn",
-            "spark", "hadoop", "kafka",
-            "aws", "azure", "gcp", "cloud computing", "docker", "kubernetes",
-            "react", "vue", "angular", "node.js", "django", "flask", "fastapi",
-            "power bi", "tableau", "qlik", "looker", "excel",
-            "git", "github", "gitlab", "ci/cd", "jenkins", "terraform", "ansible",
+            "spark", "apache spark", "pyspark", "hadoop", "kafka",
+            "aws", "azure", "gcp", "google cloud", "cloud computing", "docker", "kubernetes", "k8s",
+            "react", "vue", "angular", "node.js", "nodejs", "django", "flask", "fastapi",
+            "power bi", "powerbi", "tableau", "qlik", "looker", "excel",
+            "git", "github", "gitlab", "ci/cd", "cicd", "jenkins", "terraform", "ansible",
             "linux", "bash", "shell scripting",
-            "agile", "scrum", "kanban"
+            "agile", "scrum", "kanban",
+            "mlops", "mlflow", "kubeflow", "airflow", "apache airflow"
         ]
         
         for skill in skill_keywords:
-            if skill in text_lower:
-                skills.append(skill.title())
+            skill_normalized = skill.replace("-", " ").replace("_", " ")
+            # Check both original and normalized versions
+            if skill in text_lower or skill_normalized in text_normalized:
+                # Normalize skill name for storage (handle special cases)
+                if skill == "c++":
+                    skill_stored = "C++"
+                elif skill == "c#":
+                    skill_stored = "C#"
+                elif skill == "ml":
+                    skill_stored = "Machine Learning"
+                elif skill == "ai":
+                    skill_stored = "Artificial Intelligence"
+                elif skill == "ci/cd" or skill == "cicd":
+                    skill_stored = "CI/CD"
+                elif skill == "scikit-learn" or skill == "scikit learn" or skill == "sklearn":
+                    skill_stored = "Scikit-learn"
+                elif skill == "power bi" or skill == "powerbi":
+                    skill_stored = "Power BI"
+                elif skill == "node.js" or skill == "nodejs":
+                    skill_stored = "Node.js"
+                elif skill == "apache spark" or skill == "pyspark":
+                    skill_stored = "Apache Spark"
+                elif skill == "apache airflow":
+                    skill_stored = "Apache Airflow"
+                elif "-" in skill:
+                    skill_stored = skill.replace(" ", "-").title()
+                else:
+                    skill_stored = skill.title()
+                skills.append(skill_stored)
         
         return list(set(skills))
     
@@ -293,14 +358,80 @@ class AgentProfil:
         required_skills = job_profile.get("skills_obligatoires", [])
         optional_skills = job_profile.get("skills_optionnelles", [])
         
-        matched_required = sum(1 for skill in required_skills 
-                              if any(skill.lower() in s.lower() for s in skills))
-        matched_optional = sum(1 for skill in optional_skills 
-                              if any(skill.lower() in s.lower() for s in skills))
+        # Normalize skills for matching
+        def normalize_skill_for_match(skill: str) -> str:
+            normalized = skill.lower().replace("-", " ").replace("_", " ").replace(".", " ").strip()
+            if "scikit" in normalized or "sklearn" in normalized:
+                return "scikit learn"
+            if "power bi" in normalized or "powerbi" in normalized:
+                return "power bi"
+            if "node.js" in normalized or "nodejs" in normalized:
+                return "node js"
+            if normalized == "ml":
+                return "machine learning"
+            if normalized == "ai":
+                return "artificial intelligence"
+            return normalized
+        
+        matched_required = 0
+        for skill_req in required_skills:
+            skill_req_norm = normalize_skill_for_match(skill_req)
+            for skill_cand in skills:
+                skill_cand_norm = normalize_skill_for_match(skill_cand)
+                if (skill_req_norm == skill_cand_norm or 
+                    skill_req_norm in skill_cand_norm or 
+                    skill_cand_norm in skill_req_norm):
+                    matched_required += 1
+                    break
+        
+        matched_optional = 0
+        for skill_opt in optional_skills:
+            skill_opt_norm = normalize_skill_for_match(skill_opt)
+            for skill_cand in skills:
+                skill_cand_norm = normalize_skill_for_match(skill_cand)
+                if (skill_opt_norm == skill_cand_norm or 
+                    skill_opt_norm in skill_cand_norm or 
+                    skill_cand_norm in skill_opt_norm):
+                    matched_optional += 1
+                    break
         
         if required_skills:
-            skills_score = (matched_required / len(required_skills)) * 40
-            optional_score = (matched_optional / max(len(optional_skills), 1)) * 10
+            match_ratio_required = matched_required / len(required_skills)
+            
+            # More generous scoring for required skills (40 points max)
+            if match_ratio_required >= 1.0:
+                # All required skills - full points
+                skills_score = 40.0
+            elif match_ratio_required >= 0.9:
+                # 90%+ match - excellent
+                skills_score = 36.0 + (match_ratio_required - 0.9) * 40  # 36-40
+            elif match_ratio_required >= 0.75:
+                # 75-90% match - very good
+                skills_score = 30.0 + (match_ratio_required - 0.75) * 40  # 30-36
+            elif match_ratio_required >= 0.6:
+                # 60-75% match - good
+                skills_score = 22.0 + (match_ratio_required - 0.6) * 53.33  # 22-30
+            elif match_ratio_required >= 0.5:
+                # 50-60% match - acceptable
+                skills_score = 15.0 + (match_ratio_required - 0.5) * 70  # 15-22
+            else:
+                # Below 50% - poor
+                skills_score = match_ratio_required * 30  # 0-15
+            
+            # Optional skills bonus (10 points max, more generous)
+            if optional_skills:
+                match_ratio_optional = matched_optional / len(optional_skills)
+                if match_ratio_optional >= 0.8:
+                    optional_score = 10.0  # Max bonus
+                elif match_ratio_optional >= 0.6:
+                    optional_score = 7.0 + (match_ratio_optional - 0.6) * 15  # 7-10
+                elif match_ratio_optional >= 0.4:
+                    optional_score = 4.0 + (match_ratio_optional - 0.4) * 15  # 4-7
+                else:
+                    optional_score = match_ratio_optional * 10  # 0-4
+            else:
+                optional_score = 0
+            
             score += skills_score + optional_score
         else:
             score += min(50, len(skills) * 2)

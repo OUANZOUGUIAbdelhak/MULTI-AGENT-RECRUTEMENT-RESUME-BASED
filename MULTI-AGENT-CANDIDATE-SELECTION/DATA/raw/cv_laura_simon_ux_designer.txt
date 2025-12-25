@@ -1,65 +1,50 @@
 LAURA SIMON
-UX/UI Designer Senior
+UX Designer | User Experience
 
 Email: laura.simon@email.com
-Téléphone: +33 6 90 12 34 56
-Portfolio: laurasimon.design
+Téléphone: +33 6 89 01 23 45
+LinkedIn: linkedin.com/in/laura-simon-ux
+Portfolio: laurasimon-ux.com
 Localisation: Paris, France
 
-PROFIL
-UX/UI Designer avec 6 ans d'expérience en design d'interfaces utilisateur, 
-recherche utilisateur et design thinking. Expertise en design systems et prototypage.
+PROFIL PROFESSIONNEL
+UX Designer avec 5 ans d'expérience en design d'interface utilisateur et expérience utilisateur. 
+Expertise en design thinking, prototypage et recherche utilisateur. Passionnée par le design centré utilisateur.
 
-EXPÉRIENCE
+EXPÉRIENCE PROFESSIONNELLE
 
-UX/UI Designer Senior | DesignStudio | 2019 - Présent
-- Conception d'interfaces pour applications web et mobiles
-- Création et maintenance d'un design system utilisé par 20+ produits
-- Conduite de recherches utilisateur (interviews, tests utilisabilité)
-- Collaboration avec les équipes produit et développement
-- Outils: Figma, Sketch, Adobe XD, Principle
+UX Designer Senior | DesignStudio | 2019 - Présent
+- Conception d'interfaces utilisateur
+- Recherche utilisateur et tests utilisateurs
+- Prototypage avec Figma et Sketch
+- Collaboration avec équipes produit et développement
+- Outils: Figma, Sketch, Adobe XD, InVision
 
-UX Designer | DigitalAgency | 2017 - 2019
-- Design d'interfaces pour clients e-commerce
-- Création de wireframes et prototypes interactifs
-- Tests utilisabilité et itérations basées sur les retours
-- Outils: Sketch, InVision, Zeplin
-
-Designer Junior | WebDesign | 2016 - 2017
+UX Designer | WebDesign Agency | 2018 - 2019
 - Design d'interfaces web
-- Création d'assets graphiques
-- Support aux designers seniors
+- Prototypage et wireframing
+- Tests utilisateurs
+- Outils: Figma, Sketch, Adobe XD
 
-COMPÉTENCES
-- Design: UX Research, UI Design, Wireframing, Prototyping
-- Outils: Figma (expert), Sketch, Adobe XD, InVision, Principle
-- Design Systems: Création et maintenance
-- Recherche: User Interviews, Usability Testing, Personas, User Journeys
-- Frontend: HTML, CSS (bases), connaissance des contraintes techniques
+COMPÉTENCES TECHNIQUES
+- Design: Figma, Sketch, Adobe XD, InVision
+- Prototypage: Framer, Principle
+- Recherche: User interviews, Usability testing
+- Outils: Miro, Notion
 
 FORMATION
-Master en Design Interactif | École Boulle | 2016
-- Spécialisation: UX Design et Ergonomie
+Master en Design | École Boulle | 2018
+- Spécialisation: Design d'interface
 
-Licence en Arts Appliqués | Université Paris 8 | 2014
-
-CERTIFICATIONS
-- Google UX Design Certificate (2022)
-- Nielsen Norman Group UX Certification (2021)
-
-RÉALISATIONS
-- Design de 10+ produits digitaux (millions d'utilisateurs)
-- Création d'un design system adopté par toute l'entreprise
-- Augmentation du taux de conversion de 35% grâce à l'optimisation UX
+Licence en Arts Appliqués | Université Paris-Sorbonne | 2016
 
 LANGUES
 - Français: Natif
-- Anglais: Courant
-- Italien: Intermédiaire
+- Anglais: Courant (TOEIC 950)
 
 SOFT SKILLS
-- Empathie utilisateur
-- Créativité et innovation
-- Collaboration interdisciplinaire
-- Communication visuelle
-
+- Empathie
+- Créativité
+- Communication
+- Collaboration
+- Résolution de problèmes

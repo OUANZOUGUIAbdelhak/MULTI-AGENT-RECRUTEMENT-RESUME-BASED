@@ -1,0 +1,96 @@
+LUCAS MARTINEZ
+Data Scientist | Machine Learning & Data Analysis
+
+Email: lucas.martinez@email.com
+Téléphone: +33 6 45 67 89 01
+LinkedIn: linkedin.com/in/lucas-martinez-datascience
+GitHub: github.com/lucasmartinez-ds
+Localisation: Paris, France
+
+PROFIL PROFESSIONNEL
+Data Scientist avec 5 ans d'expérience en machine learning et analyse de données. 
+Expert en développement de modèles prédictifs et feature engineering. 
+Expérience en collaboration avec équipes produit. 
+Passionné par l'intelligence artificielle et l'analyse de données.
+
+EXPÉRIENCE PROFESSIONNELLE
+
+Data Scientist | DataSolutions Inc | 2019 - Présent
+- Développement de modèles de machine learning en production
+- Conception et développement de modèles prédictifs (classification, régression)
+- Feature engineering et preprocessing de données
+- Mise en place de pipelines de données avec Apache Spark
+- Analyse de données pour identifier des insights business (amélioration de 15%)
+- Collaboration avec les équipes produit pour intégrer des solutions ML
+- Création de dashboards avec Tableau pour présenter les résultats
+- Documentation technique
+- Technologies: Python, Scikit-learn, TensorFlow, Spark, PostgreSQL, MongoDB, AWS, Git
+
+Data Scientist Junior | AnalyticsLab | 2018 - 2019
+- Développement de modèles de classification et régression
+- Feature engineering et preprocessing de données
+- Analyse de données clients
+- Création de rapports avec Python
+- Technologies: Python, Scikit-learn, Pandas, NumPy, SQL, PostgreSQL, Git
+
+Stagiaire Data Analyst | FinanceData | 2017 - 2018
+- Analyse de données financières
+- Création de visualisations
+- Support à l'équipe analytics
+
+COMPÉTENCES TECHNIQUES
+
+Langages de Programmation:
+- Python (avancé - 5 ans): Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch
+- SQL (avancé): PostgreSQL, MongoDB
+
+Machine Learning & Deep Learning:
+- Frameworks ML: Scikit-learn (classification, régression), TensorFlow, PyTorch
+- Techniques: Feature engineering, cross-validation, hyperparameter tuning
+
+Big Data & Data Engineering:
+- Apache Spark (PySpark): Traitement de données distribuées
+- Hadoop: HDFS
+
+Bases de Données:
+- PostgreSQL: Requêtes complexes, optimisation
+- MongoDB: NoSQL
+
+Cloud & DevOps:
+- AWS: EC2, S3
+- Git: Version control, bonnes pratiques de développement
+
+Visualisation & Reporting:
+- Tableau: Visualisations avancées
+- Python: Matplotlib, Seaborn
+
+FORMATION
+
+Master en Data Science | Université Paris-Saclay | 2017
+- Spécialisation: Machine Learning, Big Data
+- Mémoire: "Modèles de machine learning pour l'analyse prédictive"
+- Mention Bien
+
+Licence en Mathématiques | Université Paris-Diderot | 2015
+
+PROJETS PERSONNELS
+- Système de recommandation avec machine learning
+- Analyse de données avec Python
+- Kaggle competitions: Participation active
+
+LANGUES
+- Français: Natif (Courant)
+- Anglais: Courant (TOEIC 950)
+
+SOFT SKILLS
+- Capacité d'analyse et de résolution de problèmes
+- Esprit d'équipe et collaboration
+- Communication des résultats techniques
+- Curiosité et veille technologique
+- Autonomie et proactivité
+
+CENTRES D'INTÉRÊT
+- Veille technologique en IA
+- Compétitions de data science
+- Lecture d'articles techniques
+

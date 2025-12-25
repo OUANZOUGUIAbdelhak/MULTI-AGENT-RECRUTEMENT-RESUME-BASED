@@ -55,7 +55,8 @@ class MultiAgentPipeline:
                          job_description: str,
                          criteres: Optional[Dict] = None,
                          use_rag: bool = True,
-                         max_candidates: int = 10) -> Dict[str, Any]:
+                         max_candidates: int = 10,
+                         cv_ids: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Process a job offer and evaluate candidates.
         
@@ -73,10 +74,10 @@ class MultiAgentPipeline:
         job_profile = self.agent_rh.analyser_offre(job_description, criteres)
         print(f"✅ Job profile extracted: {job_profile.get('poste', 'N/A')}")
         
-        # Step 2: Retrieve candidates using RAG or direct file access
+        # Step 2: Retrieve candidates using cv_ids, RAG, or direct file access
         print(f"\n🔍 Retrieving candidates...")
         candidates_data = self._retrieve_candidates(
-            job_profile, use_rag, max_candidates
+            job_profile, use_rag, max_candidates, cv_ids
         )
         
         if not candidates_data:
@@ -123,22 +124,32 @@ class MultiAgentPipeline:
     def _retrieve_candidates(self,
                             job_profile: Dict[str, Any],
                             use_rag: bool,
-                            max_candidates: int) -> List[Dict[str, Any]]:
+                            max_candidates: int,
+                            cv_ids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         """
-        Retrieve candidate documents using RAG or file system.
+        Retrieve candidate documents using cv_ids, RAG, or file system.
         
         Args:
             job_profile: Target job profile
-            use_rag: Whether to use RAG retrieval
+            use_rag: Whether to use RAG for ranking (but always load full files)
             max_candidates: Maximum candidates to retrieve
+            cv_ids: Optional list of specific CV IDs to load
             
         Returns:
-            List of candidate data dictionaries
+            List of candidate data dictionaries with FULL CV content
         """
         candidates_data = []
         
+        # Priority 1: If cv_ids are provided, load those specific files
+        if cv_ids:
+            print(f"📋 Loading {len(cv_ids)} specific CV(s) by ID...")
+            candidates_data = self._load_candidates_by_ids(cv_ids)
+            if candidates_data:
+                print(f"✅ Loaded {len(candidates_data)} CV(s) by ID")
+                return candidates_data
+        
+        # Priority 2: Use RAG to find relevant CVs, then load FULL files
         if use_rag and self.rag_system and self.rag_system.index:
-            # Use RAG to find relevant candidates
             try:
                 # Build query from job profile
                 query_parts = []
@@ -149,23 +160,157 @@ class MultiAgentPipeline:
                 
                 query = " ".join(query_parts) if query_parts else "candidate CV"
                 
-                # Search documents
-                results = self.rag_system.search_documents(query, k=max_candidates)
+                # Search documents to get file names (not chunks!)
+                results = self.rag_system.search_documents(query, k=max_candidates * 2)  # Get more to deduplicate
                 
+                # Extract unique file names from results
+                file_names = set()
                 for result in results:
-                    candidates_data.append({
-                        "source": result.get("source", ""),
-                        "content": result.get("content", ""),
-                        "similarity": result.get("similarity", 0.0)
-                    })
+                    source = result.get("source", "")
+                    # Extract filename from source path
+                    if source:
+                        # Handle different path formats
+                        if "/" in source:
+                            file_name = source.split("/")[-1]
+                        elif "\\" in source:
+                            file_name = source.split("\\")[-1]
+                        else:
+                            file_name = source
+                        file_names.add(file_name)
+                
+                # Load FULL files (not chunks!)
+                if file_names:
+                    print(f"📋 Loading {len(file_names)} CV file(s) found by RAG...")
+                    candidates_data = self._load_candidates_by_filenames(list(file_names)[:max_candidates])
+                    if candidates_data:
+                        print(f"✅ Loaded {len(candidates_data)} full CV(s) from RAG search")
+                        return candidates_data
                 
             except Exception as e:
                 print(f"⚠️  RAG retrieval failed: {e}, falling back to file system")
-                use_rag = False
         
-        if not candidates_data:
-            # Fallback: Load from file system
-            candidates_data = self._load_candidates_from_files(max_candidates)
+        # Priority 3: Fallback - Load from file system
+        print(f"📋 Loading CVs from file system...")
+        candidates_data = self._load_candidates_from_files(max_candidates)
+        return candidates_data
+    
+    def _load_candidates_by_ids(self, cv_ids: List[str]) -> List[Dict[str, Any]]:
+        """Load candidate files by their IDs (UUID or filename)."""
+        from src.config import RAW_DIR
+        import uuid as uuid_lib
+        
+        candidates_data = []
+        
+        if not RAW_DIR.exists():
+            return candidates_data
+        
+        # Get all candidate files
+        all_files = list(RAW_DIR.glob("*.txt")) + list(RAW_DIR.glob("*.pdf"))
+        
+        # Create lookup dictionaries for faster matching
+        files_by_uuid = {}  # Files saved with UUID names
+        files_by_name = {}  # Files with descriptive names
+        
+        for file_path in all_files:
+            file_stem = file_path.stem
+            file_name = file_path.name
+            
+            # Check if filename is a UUID (uploaded files)
+            try:
+                # Try to parse as UUID
+                uuid_lib.UUID(file_stem)
+                files_by_uuid[file_stem] = file_path
+            except ValueError:
+                # Not a UUID, store by name
+                files_by_name[file_name.lower()] = file_path
+                files_by_name[file_stem.lower()] = file_path
+        
+        # Try to match IDs to files
+        for cv_id in cv_ids:
+            matched_file = None
+            
+            # Strategy 1: Direct UUID match (for uploaded files)
+            try:
+                uuid_lib.UUID(cv_id)
+                if cv_id in files_by_uuid:
+                    matched_file = files_by_uuid[cv_id]
+            except ValueError:
+                pass
+            
+            # Strategy 2: Match by filename (exact or partial)
+            if not matched_file:
+                cv_id_lower = cv_id.lower()
+                # Try exact match first
+                if cv_id_lower in files_by_name:
+                    matched_file = files_by_name[cv_id_lower]
+                else:
+                    # Try partial match (cv_id might be part of filename)
+                    for file_name_lower, file_path in files_by_name.items():
+                        if cv_id_lower in file_name_lower or file_name_lower.startswith(cv_id_lower):
+                            matched_file = file_path
+                            break
+            
+            # Strategy 3: Match by email prefix (extract from cv_id if it's an email)
+            if not matched_file and '@' in cv_id:
+                email_prefix = cv_id.split('@')[0].lower()
+                for file_name_lower, file_path in files_by_name.items():
+                    if email_prefix in file_name_lower:
+                        matched_file = file_path
+                        break
+            
+            if matched_file:
+                try:
+                    if matched_file.suffix.lower() == ".pdf":
+                        text = self._extract_pdf_text(matched_file)
+                    else:
+                        text = matched_file.read_text(encoding='utf-8', errors='ignore')
+                    
+                    candidates_data.append({
+                        "source": matched_file.name,
+                        "content": text,
+                        "similarity": 1.0,
+                        "cv_id": cv_id
+                    })
+                    print(f"✅ Loaded CV: {matched_file.name} (matched by ID: {cv_id})")
+                except Exception as e:
+                    print(f"⚠️  Failed to load {matched_file.name}: {e}")
+            else:
+                print(f"⚠️  Could not find file for CV ID: {cv_id}")
+        
+        return candidates_data
+    
+    def _load_candidates_by_filenames(self, filenames: List[str]) -> List[Dict[str, Any]]:
+        """Load candidate files by their filenames."""
+        from src.config import RAW_DIR
+        
+        candidates_data = []
+        
+        if not RAW_DIR.exists():
+            return candidates_data
+        
+        # Get all candidate files
+        all_files = list(RAW_DIR.glob("*.txt")) + list(RAW_DIR.glob("*.pdf"))
+        
+        # Create a lookup dictionary
+        file_lookup = {f.name.lower(): f for f in all_files}
+        
+        for filename in filenames:
+            filename_lower = filename.lower()
+            if filename_lower in file_lookup:
+                file_path = file_lookup[filename_lower]
+                try:
+                    if file_path.suffix.lower() == ".pdf":
+                        text = self._extract_pdf_text(file_path)
+                    else:
+                        text = file_path.read_text(encoding='utf-8', errors='ignore')
+                    
+                    candidates_data.append({
+                        "source": file_path.name,
+                        "content": text,
+                        "similarity": 1.0
+                    })
+                except Exception as e:
+                    print(f"⚠️  Failed to load {file_path.name}: {e}")
         
         return candidates_data
     

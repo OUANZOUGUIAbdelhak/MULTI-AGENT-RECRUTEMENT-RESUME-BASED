@@ -68,41 +68,16 @@ function App() {
   const handleResumeSelectionChange = async (fileIds: string[]) => {
     setSelectedResumeIds(fileIds);
     
-    // Fetch file details and add to uploadedCVs if not already present
-    try {
-      const resumeFiles = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/api/files/resumes`).then(r => r.json());
-      const selectedFiles = resumeFiles.files.filter((f: any) => fileIds.includes(f.id));
-      
-      // Add to uploadedCVs if not already present
-      const newCVs: UploadedCV[] = selectedFiles
-        .filter((file: any) => !uploadedCVs.some(cv => cv.id === file.id))
-        .map((file: any) => ({
-          id: file.id,
-          file: new File([], file.filename), // Dummy file object since it's from server
-          name: file.filename,
-          size: file.size,
-          uploadDate: new Date(),
-          status: 'processed' as const,
-        }));
-      
-      if (newCVs.length > 0) {
-        setUploadedCVs((prev) => [...prev, ...newCVs]);
-      }
-      
-      // Remove CVs that are no longer selected
-      setUploadedCVs((prev) => 
-        prev.filter((cv) => {
-          // Keep if it's an uploaded file (has a real File object) or if it's still selected
-          if (cv.file.size > 0 || fileIds.includes(cv.id)) {
-            return true;
-          }
-          // Remove if it was from DATA/raw and is no longer selected
-          return false;
-        })
-      );
-    } catch (error) {
-      console.error('Error fetching resume files:', error);
-    }
+    // Remove CVs from uploadedCVs that were from DATA/raw and are no longer selected
+    // Only keep files that were actually uploaded (have a real File object with size > 0)
+    setUploadedCVs((prev) => 
+      prev.filter((cv) => {
+        // Keep if it's an uploaded file (has a real File object with actual content)
+        // Check if file has meaningful size (uploaded files) vs dummy files (selected from DATA/raw)
+        const isUploadedFile = cv.file.size > 100; // Real uploaded files have content
+        return isUploadedFile;
+      })
+    );
   };
 
   // Process selected resumes from DATA/raw (rebuild index)
@@ -142,12 +117,15 @@ function App() {
 
   // Start evaluation
   const handleStartEvaluation = async () => {
-    // Combine uploaded CVs and selected resumes from DATA/raw
-    const allCVIds = uploadedCVs.length > 0 
-      ? uploadedCVs.map((cv) => cv.id)
-      : selectedResumeIds.length > 0
-      ? selectedResumeIds
-      : [];
+    // Combine uploaded CVs and selected resumes from DATA/raw, avoiding duplicates
+    // Only count files that were actually uploaded (have real File content)
+    const uploadedIds = uploadedCVs
+      .filter(cv => cv.file.size > 100) // Real uploaded files have content
+      .map(cv => cv.id);
+    
+    // Add selected resume IDs that aren't already in uploaded CVs
+    const selectedIds = selectedResumeIds.filter(id => !uploadedIds.includes(id));
+    const allCVIds = [...uploadedIds, ...selectedIds];
     
     if (!jobOffer || allCVIds.length === 0) return;
 
@@ -294,8 +272,8 @@ function App() {
               {/* Evaluation Control */}
               <EvaluationControl
                 jobOffer={jobOffer}
-                cvCount={uploadedCVs.length}
-                selectedResumeCount={selectedResumeIds.length}
+                cvCount={uploadedCVs.filter(cv => cv.file.size > 100).length} // Only count actually uploaded files
+                selectedResumeCount={selectedResumeIds.length} // Count files selected from DATA/raw
                 isEvaluating={false}
                 onStartEvaluation={handleStartEvaluation}
               />

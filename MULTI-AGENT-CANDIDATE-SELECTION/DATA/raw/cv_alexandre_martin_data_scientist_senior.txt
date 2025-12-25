@@ -1,0 +1,138 @@
+ALEXANDRE MARTIN
+Data Scientist Senior | Expert Machine Learning & MLOps
+
+Email: alexandre.martin@email.com
+Téléphone: +33 6 98 76 54 32
+LinkedIn: linkedin.com/in/alexandre-martin-datascience
+GitHub: github.com/alexmartin-ds
+Localisation: Paris, France
+
+PROFIL PROFESSIONNEL
+Data Scientist Senior avec 6 ans d'expérience en data science et machine learning. 
+Expert en développement et déploiement de modèles de machine learning en production. 
+Spécialiste en analyse de grandes quantités de données pour identifier des insights business. 
+Expérience solide en collaboration avec équipes produit et engineering pour intégrer des solutions ML.
+Passionné par l'IA, la recherche appliquée et l'encadrement d'équipes techniques. 
+Excellente capacité d'analyse et de résolution de problèmes complexes. Esprit d'équipe et collaboration efficace.
+Communication claire des résultats techniques. Curiosité et veille technologique constante. Autonomie et proactivité.
+
+EXPÉRIENCE PROFESSIONNELLE
+
+Data Scientist Senior | DataTech Innovations | 2020 - Présent (4 ans)
+- Développement et déploiement de modèles de machine learning en production (classification, régression, clustering)
+- Mise en place de pipelines MLOps avec MLflow et Kubeflow pour automatiser le cycle de vie des modèles
+- Conception et développement de modèles prédictifs pour l'optimisation des opérations (amélioration de 25% des performances)
+- Feature engineering avancé et preprocessing de données massives avec Apache Spark
+- Déploiement de modèles en production avec Docker et Kubernetes sur AWS
+- Création de dashboards interactifs avec Power BI et Tableau pour présenter les insights business
+- Encadrement et formation de 3 data scientists juniors
+- Collaboration étroite avec les équipes produit et engineering pour intégrer des solutions ML
+- Documentation technique complète et présentation régulière aux stakeholders
+- Mener des projets de recherche et développement en IA
+- Technologies: Python (avancé), SQL (avancé), Scikit-learn, TensorFlow, PyTorch, Apache Spark, Hadoop, PostgreSQL, MongoDB, Git, AWS, Docker, Kubernetes, MLflow, Kubeflow, Power BI, Tableau, R
+
+Data Scientist | Analytics Pro | 2018 - 2020 (2 ans)
+- Développement de modèles de machine learning pour la détection de fraude (réduction de 30% des faux positifs)
+- Analyse de grandes quantités de données clients pour identifier des insights business stratégiques
+- Mise en place de pipelines de données avec Apache Spark et Airflow
+- Modélisation prédictive pour l'optimisation des campagnes marketing (ROI amélioré de 20%)
+- Création de visualisations avancées avec Tableau et Power BI
+- Collaboration avec les équipes produit pour intégrer des recommandations ML en temps réel
+- Technologies: Python, Scikit-learn, TensorFlow, Apache Spark, Hadoop, SQL, PostgreSQL, MongoDB, Tableau, Power BI, Git
+
+Data Scientist Junior | TechStart Analytics | 2017 - 2018 (1 an)
+- Développement de modèles de classification et régression pour l'analyse prédictive
+- Preprocessing et feature engineering sur datasets volumineux
+- Création de rapports d'analyse et visualisations avec Python (Matplotlib, Seaborn)
+- Support à l'équipe analytics et participation aux projets de recherche et développement en IA
+- Technologies: Python, Scikit-learn, Pandas, NumPy, SQL, PostgreSQL, Git
+
+COMPÉTENCES TECHNIQUES
+
+Langages de Programmation:
+- Python (avancé - 6 ans d'expérience): Pandas, NumPy, Scikit-learn, TensorFlow, PyTorch, Keras, XGBoost
+- SQL (avancé): Requêtes complexes, optimisation, PostgreSQL, MongoDB
+- R (maîtrise): Analyse statistique, visualisation, modélisation
+
+Machine Learning & Deep Learning:
+- Frameworks ML: Scikit-learn (classification, régression, clustering), TensorFlow, PyTorch, Keras
+- Techniques: Feature engineering, cross-validation, hyperparameter tuning, ensemble methods
+- Deep Learning: Réseaux de neurones, CNN, RNN, LSTM, transfer learning
+
+Big Data & Data Engineering:
+- Apache Spark (PySpark): Traitement de données distribuées, Spark SQL, Spark MLlib
+- Hadoop: HDFS, MapReduce
+- Airflow: Orchestration de pipelines de données
+
+Bases de Données:
+- PostgreSQL: Design de schémas, optimisation de requêtes, indexation
+- MongoDB: NoSQL, agrégations complexes
+
+Cloud & DevOps:
+- AWS: EC2, S3, SageMaker, ECS, EKS, Lambda
+- Azure: Azure ML, Databricks
+- GCP: Google Cloud Platform (expérience basique)
+- Docker: Containerisation d'applications ML
+- Kubernetes: Orchestration de conteneurs, déploiement de modèles
+- Git: Version control, workflows collaboratifs, bonnes pratiques de développement, CI/CD
+
+MLOps:
+- MLflow: Tracking d'expériences, gestion de modèles, déploiement
+- Kubeflow: Pipelines ML, gestion du cycle de vie des modèles
+
+Visualisation & Reporting:
+- Power BI: Création de dashboards interactifs, rapports business
+- Tableau: Visualisations avancées, analyses exploratoires
+- Python: Matplotlib, Seaborn, Plotly
+
+Outils & Environnements:
+- Jupyter Notebooks, VS Code, PyCharm
+- Linux, Bash scripting
+- Agile/Scrum methodologies
+
+FORMATION
+
+Master en Data Science et Intelligence Artificielle | École Polytechnique | 2017
+- Spécialisation: Machine Learning, Deep Learning, Big Data
+- Mémoire: "Déploiement de modèles de deep learning en production avec MLOps"
+- Mention Très Bien
+
+Licence en Mathématiques et Informatique | Université Paris-Saclay | 2015
+- Spécialisation: Statistiques, Algorithmes, Structures de données
+- Mention Bien
+
+CERTIFICATIONS
+- AWS Certified Machine Learning - Specialty (2022)
+- Google Cloud Professional Machine Learning Engineer (2021)
+- Databricks Certified Associate Developer for Apache Spark (2020)
+
+PROJETS PERSONNELS & CONTRIBUTIONS
+- Système de recommandation en temps réel avec collaborative filtering et deep learning
+- Pipeline MLOps complet pour déploiement automatique de modèles (GitHub: 500+ stars)
+- Analyse de sentiment sur réseaux sociaux avec NLP et transformers
+- Kaggle competitions: Top 5% dans plusieurs compétitions de machine learning
+- Contributions open-source: Bibliothèques Python pour MLOps (200+ contributions)
+
+PUBLICATIONS & CONFÉRENCES
+- Présentation à PyData Paris 2022: "MLOps Best Practices for Production ML Systems"
+- Article technique: "Feature Engineering at Scale with Apache Spark" (Medium, 5K+ vues)
+
+LANGUES
+- Français: Natif (Courant)
+- Anglais: Courant (TOEIC 980) - Communication technique et présentation en anglais
+
+SOFT SKILLS
+- Excellente capacité d'analyse et de résolution de problèmes complexes
+- Esprit d'équipe et collaboration efficace avec équipes multidisciplinaires
+- Communication claire des résultats techniques aux stakeholders non-techniques
+- Curiosité et veille technologique constante (lecture de papers, conférences)
+- Autonomie et proactivité dans la gestion de projets
+- Leadership et encadrement d'équipes techniques
+- Gestion de projet Agile/Scrum
+- Présentation et vulgarisation de concepts techniques complexes
+
+CENTRES D'INTÉRÊT
+- Veille technologique en IA et machine learning
+- Contributions à des projets open-source
+- Participation à des hackathons et compétitions de data science
+- Lecture de papers scientifiques et articles techniques

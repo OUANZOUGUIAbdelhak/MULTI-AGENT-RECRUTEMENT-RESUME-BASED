@@ -1,64 +1,53 @@
 PIERRE MARTIN
-Développeur Full-Stack Senior
+Développeur Full Stack | Python & JavaScript
 
 Email: pierre.martin@email.com
-Téléphone: +33 6 23 45 67 89
-GitHub: github.com/pierremartin
-Localisation: Lyon, France
+Téléphone: +33 6 56 78 90 12
+LinkedIn: linkedin.com/in/pierre-martin-dev
+GitHub: github.com/pierremartin-dev
+Localisation: Paris, France
 
-PROFIL
-Développeur Full-Stack avec 7 ans d'expérience dans le développement d'applications web et mobiles.
-Expert en JavaScript, React, Node.js et architectures cloud. Passionné par les technologies modernes.
+PROFIL PROFESSIONNEL
+Développeur Full Stack avec 6 ans d'expérience en développement web et applications. 
+Expertise en Python, JavaScript, React et bases de données. Passionné par le développement logiciel.
 
-EXPÉRIENCE
+EXPÉRIENCE PROFESSIONNELLE
 
-Développeur Full-Stack Senior | WebAgency | 2020 - Présent
-- Développement d'applications web complexes avec React et Node.js
-- Architecture microservices avec Docker et Kubernetes
-- Lead technique sur plusieurs projets clients majeurs
-- Technologies: React, Node.js, TypeScript, PostgreSQL, MongoDB, AWS
+Développeur Full Stack Senior | WebTech | 2020 - Présent
+- Développement d'applications web avec Python (Django, Flask) et JavaScript (React)
+- Conception et développement de bases de données PostgreSQL
+- Collaboration avec les équipes produit
+- Technologies: Python, JavaScript, React, Django, Flask, PostgreSQL, Git
 
-Développeur Full-Stack | StartupTech | 2018 - 2020
-- Développement de plateforme SaaS pour la gestion de projets
-- Intégration d'APIs tierces et développement d'API REST
-- Optimisation des performances (réduction du temps de chargement de 40%)
-- Technologies: Vue.js, Express.js, MySQL, Redis, Docker
+Développeur Full Stack | StartupDev | 2018 - 2020
+- Développement d'applications web
+- Frontend avec React
+- Backend avec Python et Django
+- Technologies: Python, JavaScript, React, Django, PostgreSQL, Git
 
-Développeur Frontend | DigitalCorp | 2016 - 2018
-- Développement d'interfaces utilisateur responsives
-- Collaboration avec les designers UX/UI
-- Technologies: React, Redux, HTML5, CSS3, Sass
+Développeur Junior | TechStart | 2017 - 2018
+- Développement web
+- Support technique
+- Technologies: Python, JavaScript, SQL, Git
 
-COMPÉTENCES
-- Frontend: React, Vue.js, Angular, TypeScript, HTML5, CSS3, Sass
-- Backend: Node.js, Express, NestJS, Python (Django, Flask)
-- Bases de données: PostgreSQL, MySQL, MongoDB, Redis
-- DevOps: Docker, Kubernetes, CI/CD, AWS, Azure
-- Outils: Git, Webpack, Jest, ESLint, Postman
+COMPÉTENCES TECHNIQUES
+- Langages: Python (avancé), JavaScript (avancé), SQL (intermédiaire)
+- Frameworks: Django, Flask, React, Node.js
+- Bases de données: PostgreSQL, MongoDB
+- Outils: Git, Docker
 
 FORMATION
-Master en Informatique | INSA Lyon | 2016
-- Spécialisation: Génie Logiciel et Systèmes Distribués
+Master en Informatique | Université Paris-Saclay | 2017
+- Spécialisation: Développement logiciel
 
-DUT Informatique | IUT Lyon 1 | 2014
-
-CERTIFICATIONS
-- AWS Certified Solutions Architect (2022)
-- Google Cloud Professional Developer (2021)
-
-PROJETS
-- Application e-commerce avec React et Node.js
-- Plateforme de streaming vidéo avec WebRTC
-- Outil de gestion de tâches en temps réel
+Licence en Informatique | Université Paris-Diderot | 2015
 
 LANGUES
 - Français: Natif
-- Anglais: Courant
-- Allemand: Notions
+- Anglais: Courant (TOEIC 940)
 
 SOFT SKILLS
-- Leadership technique
-- Communication efficace
-- Adaptabilité
-- Esprit d'innovation
-
+- Résolution de problèmes
+- Esprit d'équipe
+- Communication
+- Autonomie

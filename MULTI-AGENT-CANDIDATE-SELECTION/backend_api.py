@@ -297,7 +297,14 @@ async def build_index_with_progress(build_id: str):
         progress["message"] = "Setting up ChromaDB vector store..."
         progress["progress"] = 40
         
-        chroma_collection = rag_system.chroma_client.get_or_create_collection(
+        # Delete existing collection to avoid duplicates
+        try:
+            rag_system.chroma_client.delete_collection(name=rag_system.collection_name)
+            print(f"🗑️  Deleted existing collection '{rag_system.collection_name}' to avoid duplicates")
+        except ValueError:
+            pass  # Collection doesn't exist, that's fine
+        
+        chroma_collection = rag_system.chroma_client.create_collection(
             name=rag_system.collection_name
         )
         from llama_index.vector_stores.chroma import ChromaVectorStore
@@ -485,12 +492,13 @@ async def run_evaluation(
             await asyncio.sleep(0.5)
             update_agent_status(evaluation_id, "rh-agent", "processing", progress)
         
-        # Process job offer
+        # Process job offer - USE cv_ids if provided!
         results = pipeline.process_job_offer(
             job_description=job_description,
             criteres=criteres if criteres else None,
             use_rag=use_rag and rag_system and rag_system.index is not None,
-            max_candidates=max_candidates
+            max_candidates=max_candidates,
+            cv_ids=cv_ids if cv_ids else None  # Pass cv_ids to pipeline!
         )
         
         update_agent_status(evaluation_id, "rh-agent", "completed", 100)

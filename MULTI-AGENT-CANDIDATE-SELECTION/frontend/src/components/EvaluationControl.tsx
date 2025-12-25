@@ -48,11 +48,19 @@ export default function EvaluationControl({
               />
               <span>
                 CVs: {totalCVs} {totalCVs === 1 ? 'file' : 'files'}
-                {selectedResumeCount > 0 && cvCount > 0 && (
+                {selectedResumeCount > 0 && cvCount > 0 ? (
                   <span className="text-gray-500 ml-1">
                     ({cvCount} uploaded, {selectedResumeCount} selected)
                   </span>
-                )}
+                ) : selectedResumeCount > 0 ? (
+                  <span className="text-gray-500 ml-1">
+                    ({selectedResumeCount} selected from DATA/raw)
+                  </span>
+                ) : cvCount > 0 ? (
+                  <span className="text-gray-500 ml-1">
+                    ({cvCount} uploaded)
+                  </span>
+                ) : null}
               </span>
             </div>
           </div>
