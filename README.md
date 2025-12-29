@@ -15,7 +15,7 @@ For detailed documentation, continue reading below.
 - **📊 Scoring Multi-Critères**: Évaluation profil, technique et soft skills
 - **⚖️ Classement Automatique**: Agent décideur génère un classement final justifié
 - **📈 Rapports Détaillés**: Justifications complètes et statistiques
-- **🎨 Interface Moderne**: Interface Streamlit intuitive et visuellement attrayante
+- **🎨 Interface Moderne**: Application React moderne avec design glassmorphism et animations fluides
 
 ## 🏗️ Architecture des Agents
 
@@ -33,6 +33,7 @@ Le système comprend 5 agents spécialisés:
 
 - Python 3.9+
 - pip
+- Node.js 18+ et npm (pour l'application React)
 
 ### Étapes d'installation
 
@@ -101,24 +102,32 @@ source venv/bin/activate  # Sur Windows: venv\Scripts\activate
 
 6. **Lancer l'Application**
 
-   **⚠️ IMPORTANT:** Utilisez Streamlit pour lancer l'application, PAS directement avec Python!
+   Le système comprend un backend FastAPI et une application React frontend.
    
+   **Étape 1: Démarrer le Backend API**
    ```bash
-   # Option 1: Utiliser le script de démarrage
-   python run.py
-   
-   # Option 2: Utiliser Streamlit directement
-   streamlit run src/app/app.py
-   
-   # Option 3: Windows - Double-cliquer sur run.bat
+   # Dans le répertoire principal
+   python backend_api.py
    ```
+   Le backend sera disponible sur `http://localhost:8000`
    
-   **❌ NE PAS FAIRE:** `python src/app/app.py` (cela causera des erreurs d'import)
+   **Étape 2: Démarrer le Frontend React**
+   ```bash
+   # Dans un nouveau terminal
+   cd frontend
+   npm install  # Seulement la première fois
+   npm run dev
+   ```
+   L'application React sera disponible sur `http://localhost:5173`
+   
+   **Note:** Le frontend nécessite que le backend soit en cours d'exécution.
 
 7. **Construire l'Index RAG**
 
-   - Cliquer sur "🚀 Initialize System" dans la sidebar
-   - Cliquer sur "🔨 Build Index" pour créer l'index vectoriel
+   - Ouvrir l'application React dans votre navigateur (`http://localhost:5173`)
+   - Téléverser les CVs ou sélectionner des fichiers existants
+   - Cliquer sur "Build Index" pour créer l'index vectoriel
+   - Attendre la fin de l'indexation (2-5 minutes pour 10 CVs)
    - Commencer les évaluations!
 
 ## 📁 Structure du Projet
@@ -127,15 +136,20 @@ source venv/bin/activate  # Sur Windows: venv\Scripts\activate
 MULTI-AGENT-CANDIDATE-SELECTION/
 ├── Config.yaml              # Configuration
 ├── requirements.txt         # Dépendances Python
+├── backend_api.py          # API FastAPI backend
 ├── README.md               # Ce fichier
-├── run.py                  # Script de démarrage rapide
 ├── DATA/
 │   ├── raw/               # CV des candidats
 │   └── jobs/              # Descriptions de poste
 ├── vectorstore/           # Stockage ChromaDB (créé automatiquement)
+├── frontend/              # Application React
+│   ├── src/               # Code source React
+│   │   ├── components/    # Composants React
+│   │   ├── services/      # Services API
+│   │   └── App.tsx        # Composant principal
+│   ├── package.json       # Dépendances Node.js
+│   └── vite.config.ts     # Configuration Vite
 ├── src/
-│   ├── app/
-│   │   └── app.py         # Interface Streamlit
 │   ├── agents/
 │   │   ├── agent_rh.py
 │   │   ├── agent_profil.py
@@ -154,19 +168,30 @@ MULTI-AGENT-CANDIDATE-SELECTION/
 
 ### Évaluation de Candidats
 
-1. **Saisir la description de poste**
-   - Texte manuel ou fichier depuis `DATA/jobs/`
+1. **Téléverser les CVs**
+   - Utiliser le drag-and-drop ou cliquer pour téléverser des fichiers PDF/TXT
+   - Ou sélectionner des fichiers existants depuis `DATA/raw/`
+
+2. **Saisir la description de poste**
+   - Remplir le formulaire avec le titre, description et exigences du poste
+   - Ou sélectionner un fichier depuis `DATA/jobs/`
    - Ajouter des critères supplémentaires (expérience, salaire, lieu, etc.)
 
-2. **Lancer l'évaluation**
-   - Cliquer sur "🚀 Lancer l'Évaluation"
-   - Le système utilise les 5 agents pour évaluer chaque candidat
+3. **Construire l'Index RAG** (première fois)
+   - Cliquer sur "Build Index" pour créer l'index vectoriel
+   - Attendre la fin de l'indexation
 
-3. **Consulter les résultats**
-   - Classement des candidats avec scores globaux
-   - Détails par agent (Profil, Technique, Soft Skills)
-   - Justifications complètes
-   - Rapport final avec statistiques
+4. **Lancer l'évaluation**
+   - Cliquer sur "Start Evaluation"
+   - Suivre la progression en temps réel des 5 agents
+   - Le système utilise les agents pour évaluer chaque candidat
+
+5. **Consulter les résultats**
+   - Tableau interactif avec classement des candidats et scores globaux
+   - Cliquer sur un candidat pour voir les détails complets
+   - Visualisations (graphiques radar, barres) des scores par dimension
+   - Justifications complètes générées par l'IA
+   - Décision finale avec recommandation
 
 ### Exemple de Résultat
 
@@ -194,11 +219,20 @@ Justification candidat_01:
 
 ## 🛠️ Technologies
 
+**Backend:**
+- **FastAPI**: Framework API REST moderne et rapide
 - **LlamaIndex**: Framework RAG pour la recherche vectorielle
 - **ChromaDB**: Base de données vectorielle persistante
-- **Streamlit**: Interface web interactive
 - **HuggingFace**: Modèles d'embedding
 - **Groq/Gemini**: Fournisseurs LLM (avec fallback automatique)
+
+**Frontend:**
+- **React 18**: Framework UI moderne
+- **TypeScript**: Typage statique pour une meilleure qualité de code
+- **Vite**: Outil de build rapide et serveur de développement
+- **TailwindCSS**: Framework CSS utility-first
+- **Framer Motion**: Bibliothèque d'animations fluides
+- **Recharts**: Visualisation de données (graphiques radar, barres)
 
 ## 📝 Notes
 
@@ -207,6 +241,8 @@ Justification candidat_01:
 - L'index doit être reconstruit lorsque les documents changent
 - ChromaDB stocke les vecteurs de manière persistante dans `vectorstore/`
 - Les agents peuvent fonctionner sans LLM (règles et heuristiques)
+- Le frontend React nécessite que le backend FastAPI soit en cours d'exécution
+- L'application React utilise le polling (toutes les 2 secondes) pour les mises à jour en temps réel
 
 ## 📊 Architecture du Pipeline
 
